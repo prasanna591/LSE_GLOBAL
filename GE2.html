@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LSE Global Academy | Luminen Service for Excellence</title>
+    <style>
+      /* --- 1. VARIABLES & RESET --- */
+      :root {
+        /* Colors */
+        --primary: #0f172a; /* Deep Navy - Trust & Professionalism */
+        --secondary: #334155; /* Slate Grey - Text */
+        --accent: #f59e0b; /* Amber/Gold - Energy & Action */
+        --light: #f8fafc; /* Off-white Background */
+        --white: #ffffff;
+        --border: #e2e8f0;
+
+        /* Spacing (8pt Grid System) */
+        --space-xs: 8px;
+        --space-sm: 16px;
+        --space-md: 32px;
+        --space-lg: 64px;
+        --space-xl: 96px;
+
+        /* Typography */
+        --font-main: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --radius: 8px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-main);
+        color: var(--secondary);
+        background-color: var(--light);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: 0.3s;
+      }
+      ul {
+        list-style: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      /* --- 2. LAYOUT UTILITIES --- */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-sm);
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: var(--space-lg);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: var(--space-xs);
+      }
+
+      .section-header p {
+        color: #64748b;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background-color: var(--accent);
+        color: var(--primary);
+      }
+      .btn-primary:hover {
+        background-color: #d97706;
+      }
+
+      .btn-outline {
+        border: 2px solid var(--white);
+        color: var(--white);
+      }
+      .btn-outline:hover {
+        background-color: var(--white);
+        color: var(--primary);
+      }
+
+      /* --- 3. NAVIGATION (Mobile First) --- */
+      header {
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.5px;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+
+      .nav-links {
+        display: none; /* Hidden on mobile by default */
+      }
+
+      /* Desktop Nav */
+      @media (min-width: 768px) {
+        .nav-links {
+          display: flex;
+          gap: var(--space-md);
+        }
+        .nav-links a {
+          font-weight: 500;
+          color: var(--primary);
+        }
+        .nav-links a:hover {
+          color: var(--accent);
+        }
+      }
+
+      /* --- 4. HERO SECTION --- */
+      .hero {
+        background-color: var(--primary);
+        color: var(--white);
+        padding: var(--space-xl) 0;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin-bottom: var(--space-md);
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        margin-bottom: var(--space-md);
+        color: #cbd5e1;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: center;
+      }
+
+      @media (min-width: 768px) {
+        .hero h1 {
+          font-size: 3.5rem;
+        }
+        .hero-buttons {
+          flex-direction: row;
+          justify-content: center;
+        }
+      }
+
+      /* --- 5. ABOUT SECTION --- */
+      .about {
+        padding: var(--space-xl) 0;
+        background: var(--white);
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        align-items: center;
+      }
+
+      .about-content h3 {
+        color: var(--accent);
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        margin-bottom: var(--space-xs);
+      }
+
+      .about-content h2 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: var(--space-sm);
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+      }
+
+      .stat-card {
+        background: var(--light);
+        padding: var(--space-sm);
+        border-radius: var(--radius);
+        text-align: center;
+      }
+      .stat-card strong {
+        display: block;
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+
+      @media (min-width: 768px) {
+        .about-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* --- 6. SERVICES (Grid Layout) --- */
+      .services {
+        padding: var(--space-xl) 0;
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .service-card {
+        background: var(--white);
+        padding: var(--space-md);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border-top: 4px solid var(--accent);
+        transition: transform 0.2s;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .service-card h3 {
+        margin-bottom: var(--space-sm);
+        color: var(--primary);
+      }
+
+      @media (min-width: 768px) {
+        .services-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .services-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* --- 7. METHODOLOGY (Feature) --- */
+      .methodology {
+        background-color: var(--primary);
+        color: var(--white);
+        padding: var(--space-xl) 0;
+        text-align: center;
+      }
+
+      .methodology-box {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      /* --- 8. CLIENTS & FOOTER --- */
+      .clients {
+        padding: var(--space-lg) 0;
+        text-align: center;
+      }
+
+      .client-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+      }
+
+      .client-tag {
+        background: #e2e8f0;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      footer {
+        background-color: #020617;
+        color: #94a3b8;
+        padding: var(--space-lg) 0;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      footer a {
+        color: var(--white);
+        text-decoration: underline;
+      }
+
+      /* Contact Form Simple Style */
+      .contact-cta {
+        background: var(--accent);
+        color: var(--primary);
+        padding: var(--space-lg) 0;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav-container">
+        <a href="#" class="logo">LSE <span>Groups</span></a>
+        <nav class="nav-links">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#methodology">Methodology</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div
+          style="
+            font-size: 24px;
+            cursor: pointer;
+            display: block;
+            @media (min-width: 768px) {
+              display: none;
+            }
+          "
+        >
+          &#9776;
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h1>Unlock Your Potential with<br />Activity Based Learning</h1>
+        <p>
+          Empowering students and job seekers through the CLAP program. Bridging
+          the gap between academic institutions and the corporate world since
+          2007.
+        </p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary">Start Your Journey</a>
+          <a href="#services" class="btn btn-outline">Explore Programs</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container about-grid">
+        <div class="about-image">
+          <div
+            style="
+              background-color: #cbd5e1;
+              width: 100%;
+              height: 300px;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #64748b;
+            "
+          >
+            [Image: Founder or Classroom Session]
+          </div>
+        </div>
+        <div class="about-content">
+          <h3>About LSE</h3>
+          <h2>16 Years of Excellence in Training</h2>
+          <p>
+            Founded by Venkatesh M., LSE Global Academy helps unemployed and
+            underemployed youth discover their inner potential. We don't just
+            lecture; we demonstrate.
+          </p>
+          <br />
+          <p>
+            Our mission is simple: To transform every student into an employable
+            professional who understands their unique value in the market.
+          </p>
+
+          <div class="stat-grid">
+            <div class="stat-card"><strong>16+</strong> Years Experience</div>
+            <div class="stat-card">
+              <strong>20+</strong> Institutional Partners
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Services</h2>
+          <p>
+            Comprehensive training solutions for Schools, Colleges, and
+            Corporates.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>CLAP Program</h3>
+            <p>
+              Our signature Corporate Learning and Placement program designed to
+              make students industry-ready through rigorous practical training.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Exam Coaching</h3>
+            <p>
+              Expert guidance for TOEFL, GRE, IELTS, GMAT, and various
+              Government competitive examinations.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Faculty Development</h3>
+            <p>
+              Specialized FDP sessions to help educators stay updated with
+              modern teaching methodologies and soft skills.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Placement Services</h3>
+            <p>
+              organizing On/Off-Campus drives and Job Fairs to connect talent
+              with top recruiters in the region.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Event Management</h3>
+            <p>
+              End-to-end management of corporate and educational events with
+              professional precision.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Retail Management</h3>
+            <p>
+              Specialized training for the retail sector to enhance operational
+              efficiency and customer service.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="methodology" class="methodology">
+      <div class="container methodology-box">
+        <h2>The ABLM Approach</h2>
+        <p style="margin-top: 16px; font-size: 1.1rem; color: #cbd5e1">
+          We follow <strong>Activity Based Learning Methodology (ABLM)</strong>.
+          Instead of passive listening, we draw the crowd to actively
+          participate. "Tell me and I forget, teach me and I may remember,
+          involve me and I learn."
+        </p>
+      </div>
+    </section>
+
+    <section class="clients">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Partners</h2>
+          <p>Trusted by premier institutions and organizations.</p>
+        </div>
+        <div class="client-list">
+          <span class="client-tag">IFET Engineering College</span>
+          <span class="client-tag">Amalorpavam Hr. Sec. School</span>
+          <span class="client-tag">Rane Madras</span>
+          <span class="client-tag">The Study</span>
+          <span class="client-tag">Manakula Vinayagar Institute</span>
+          <span class="client-tag">AG Padmavathy Hospital</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-cta">
+      <div class="container">
+        <h2 style="margin-bottom: 16px">Ready to Transform?</h2>
+        <p style="margin-bottom: 24px">
+          Contact us to schedule a workshop or discuss placement opportunities.
+        </p>
+        <a
+          href="mailto:info.lse2020@gmail.com"
+          class="btn"
+          style="background: white; color: var(--primary)"
+          >Email Us Now</a
+        >
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>Luminen Service for Excellence (LSE Groups)</p>
+        <p>Regd: 398/pdy/2007 | Govt. of Puducherry</p>
+        <br />
+        <p>&copy; 2025 LSE Global Academy. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

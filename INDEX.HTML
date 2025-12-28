@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LSE Global Academy | Empowering Future Leaders Since 2007</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --nav-height: 70px;
+        --nav-glass: rgba(255,255,255,0.06);
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #ec4899;
+        --accent: #f59e0b;
+        --dark: #0f172a;
+        --dark-light: #1e293b;
+        --gray: #64748b;
+        --light: #f1f5f9;
+        --white: #ffffff;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        /* unified glass nav that matches the opened mobile menu */
+        background: var(--nav-glass);
+        -webkit-backdrop-filter: blur(8px) saturate(120%);
+        backdrop-filter: blur(8px) saturate(120%);
+        z-index: 1000;
+        padding: 0.85rem 0;
+        box-shadow: 0 6px 18px rgba(12, 20, 40, 0.08);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.95);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease, transform 0.15s ease;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .mobile-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+        transition: background 0.15s ease;
+      }
+
+      .mobile-toggle span {
+        width: 25px;
+        height: 3px;
+        background: blue;
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+
+      /* mobile toggle open state */
+      .mobile-toggle.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      .mobile-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .mobile-toggle.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      /* Hero Section */
+      @media (max-width: 900px) {
+        .hero-container {
+          justify-content: center;
+          padding: 0 1rem;
+        }
+        .hero::before,
+        .hero::after {
+          opacity: 0.15;
+        }
+        .hero::before {
+          width: 80vmax;
+          height: 80vmax;
+          top: -40vmax;
+          right: -40vmax;
+        }
+        .hero::after {
+          width: 60vmax;
+          height: 60vmax;
+          bottom: -30vmax;
+          left: -30vmax;
+        }
+      }
+      .hero {
+        /* make hero background span the full viewport; nav overlays it */
+        min-height: 100vh;
+        padding: calc(var(--nav-height) + 2rem) 1.5rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--dark) 0%,
+          var(--dark-light) 100%
+        );
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Give desktop hero a bit more breathing room at the bottom and reduce stats overlap */
+      @media (min-width: 900px) {
+        .hero {
+          padding-bottom: 4.5rem;
+        }
+        .stats {
+          margin-top: -30px;
+        }
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 60vmax;
+        height: 60vmax;
+        background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+        top: -30vmax;
+        right: -30vmax;
+        opacity: 0.3;
+        animation: float 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 50vmax;
+        height: 50vmax;
+        background: radial-gradient(
+          circle,
+          var(--secondary) 0%,
+          transparent 70%
+        );
+        bottom: -25vmax;
+        left: -25vmax;
+        opacity: 0.3;
+        animation: float 8s ease-in-out infinite reverse;
+        pointer-events: none;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+      }
+
+      .hero-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-content {
+        max-width: 700px;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--primary);
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        border: 2px solid var(--primary);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        color: var(--white);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .hero h1 .highlight {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+        color: var(--gray);
+        margin-bottom: 2.5rem;
+        line-height: 1.8;
+      }
+
+      .cta-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: var(--white);
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--white);
+        border: 2px solid var(--white);
+      }
+
+      .btn-secondary:hover {
+        background: var(--white);
+        color: var(--dark);
+      }
+
+      /* Stats Section */
+      .stats {
+        background: var(--white);
+        padding: 3rem 1.5rem;
+        margin-top: -50px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .stats-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        background: var(--white);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--gray);
+        font-weight: 600;
+      }
+
+      /* About Section */
+      .about {
+        padding: 6rem 1.5rem;
+        background: var(--light);
+      }
+
+      .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .section-badge {
+        color: var(--primary);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        font-size: 1.2rem;
+        color: var(--gray);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .about-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .about-text {
+        background: var(--white);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .about-text h3 {
+        font-size: 1.8rem;
+        color: var(--dark);
+        margin-bottom: 1.5rem;
+      }
+
+      .about-text p {
+        color: var(--gray);
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      .feature-list {
+        list-style: none;
+        margin-top: 2rem;
+      }
+
+      .feature-list li {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--light);
+        color: var(--dark);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .feature-list li::before {
+        content: "✓";
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      /* Services Section */
+      .services {
+        padding: 6rem 1.5rem;
+        background: var(--white);
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .service-card {
+        background: var(--white);
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .service-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transform: scaleX(0);
+        transition: transform 0.3s;
+      }
+
+      .service-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
+        border-color: var(--primary);
+      }
+
+      .service-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--white);
+      }
+
+      .service-card h3 {
+        font-size: 1.4rem;
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .service-card p {
+        color: var(--gray);
+        line-height: 1.7;
+      }
+
+      /* Methodology Section */
+      .methodology {
+        padding: 6rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: var(--white);
+      }
+
+      .methodology .section-badge {
+        color: var(--accent);
+      }
+
+      .methodology .section-title {
+        color: var(--white);
+      }
+
+      .methodology .section-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .method-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .method-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s;
+      }
+
+      .method-card:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-5px);
+      }
+
+      .method-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .method-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+
+      .method-card p {
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.7;
+      }
+
+      /* Clients Section */
+      .clients {
+        padding: 6rem 1.5rem;
+        background: var(--light);
+      }
+
+      .clients-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+
+      .client-category {
+        background: var(--white);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .client-category h3 {
+        font-size: 1.8rem;
+        color: var(--dark);
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid var(--primary);
+        display: inline-block;
+      }
+
+      .client-list {
+        list-style: none;
+      }
+
+      .client-list li {
+        padding: 1rem 0;
+        color: var(--gray);
+        border-bottom: 1px solid var(--light);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .client-list li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      /* CTA Section */
+      .cta-section {
+        padding: 6rem 1.5rem;
+        background: var(--dark);
+        text-align: center;
+      }
+
+      .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .cta-section h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--white);
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-section p {
+        font-size: 1.2rem;
+        color: var(--gray);
+        margin-bottom: 3rem;
+      }
+     
+
+      .contact-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+
+      .contact-info {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        padding: 3rem;
+        border-radius: 20px;
+        color: var(--white);
+      }
+
+      .contact-info h3 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+        /* Slightly larger and more tappable links on mobile */
+        .nav-links a {
+          font-size: 1.1rem;
+          padding: 0.75rem 0;
+          color: rgba(255,255,255,0.96);
+        }
+
+        /* Mobile toggle shows subtle glass when open */
+        .mobile-toggle.open { background: rgba(255,255,255,0.04); }
+
+      .contact-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .contact-form {
+        background: var(--light);
+        padding: 3rem;
+        border-radius: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        color: var(--dark);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: var(--white);
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: var(--white);
+        padding: 3rem 1.5rem 1.5rem;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: var(--gray);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.8rem;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: var(--primary);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--dark-light);
+        color: var(--gray);
+      }
+
+      /* Mobile Menu */
+      @media (max-width: 768px) {
+        .mobile-toggle {
+          display: flex;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: var(--nav-height);
+          left: -100%;
+          width: 100%;
+          height: calc(100vh - var(--nav-height));
+          background: var(--nav-glass);
+          -webkit-backdrop-filter: blur(10px) saturate(120%);
+          backdrop-filter: blur(10px) saturate(120%);
+          border: 1px solid rgba(255,255,255,0.08);
+          box-shadow: 0 12px 40px rgba(2,6,23,0.45);
+          color: var(--white);
+          flex-direction: column;
+          padding: 2rem;
+          transition: left 0.28s cubic-bezier(0.2, 0.9, 0.2, 1), background 0.18s ease;
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .cta-group {
+          flex-direction: column;
+        }
+
+        .btn {
+          text-align: center;
+          justify-content: center;
+        }
+
+        .stats-container {
+          padding: 2rem 1rem;
+        }
+
+        .about-text {
+          padding: 2rem;
+        }
+
+        .contact-info,
+        .contact-form {
+          padding: 2rem;
+        }
+      }
+      /* Small-screen fixes to avoid overlap and hidden content */
+      html {
+        scroll-padding-top: var(--nav-height);
+      }
+
+      .nav-links {
+        z-index: 1101;
+      }
+      body.no-scroll {
+        overflow: hidden;
+      }
+
+      @media (max-width: 768px) {
+        .stats {
+          margin-top: -25px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        :root {
+          --nav-height: 64px;
+        }
+        .hero {
+          padding: calc(var(--nav-height) + 1rem) 1rem 1.25rem;
+        }
+        .hero h1 {
+          font-size: 1.9rem;
+          text-align: center;
+        }
+        .hero p {
+          font-size: 1rem;
+          margin-bottom: 1rem;
+          text-align: center;
+        }
+        .stats {
+          margin-top: 0;
+        }
+        .section-container.container,
+        .services-grid,
+        .method-cards {
+          padding: 0 0.5rem;
+        }
+        .service-card,
+        .about-text,
+        .contact-form,
+        .client-category {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <div class="logo">LSE GLOBAL</div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#clients">Clients</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button
+          class="mobile-toggle"
+          type="button"
+          aria-label="Toggle menu"
+          aria-controls="navLinks"
+          aria-expanded="false"
+          onclick="toggleMenu()"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-container container">
+        <div class="hero-content">
+          <div class="hero-badge">🎓 Trusted Since 2007</div>
+          <h1>
+            Empowering <span class="highlight">Future Leaders</span> Through
+            Excellence
+          </h1>
+          <p>
+            Transform your potential into success with India's premier training
+            and placement academy. We don't just teach, we transform lives.
+          </p>
+          <div class="cta-group">
+            <a href="#contact" class="btn btn-primary">Start Your Journey →</a>
+            <a href="#about" class="btn btn-secondary">Discover More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="stats-container container">
+        <div class="stat-item">
+          <div class="stat-number">16+</div>
+          <div class="stat-label">Years of Excellence</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Partner Institutions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">Students Trained</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="section-container container">
+        <div class="section-header">
+          <div class="section-badge">WHO WE ARE</div>
+          <h2 class="section-title">Luminen Service for Excellence</h2>
+          <p class="section-subtitle">
+            Founded by Venkatesh M., LSE has been the cornerstone of career
+            transformation in South India
+          </p>
+        </div>
+        <div class="about-content">
+          <div class="about-text">
+            <h3>Our Story</h3>
+            <p>
+              Since 2007, LSE has pioneered innovative training methodologies
+              that bridge the gap between academic learning and corporate
+              excellence. We've established a strong presence across schools,
+              colleges, and corporate sectors in Pondicherry and South Arcot.
+            </p>
+            <p>
+              Our CLAP program prepares students for today's competitive
+              corporate landscape through practical, activity-based learning
+              that goes beyond traditional education.
+            </p>
+            <ul class="feature-list">
+              <li>Activity-Based Learning Methodology (ABLM)</li>
+              <li>Practical Workshop-Driven Training</li>
+              <li>Industry-Expert Faculty</li>
+              <li>Proven Placement Track Record</li>
+              <li>Personalized Career Guidance</li>
+            </ul>
+          </div>
+          <div class="about-text">
+            <h3>Our Mission</h3>
+            <p>
+              To empower the unemployed and underemployed by transforming every
+              student into a highly employable professional who understands
+              their unique potential and strengths.
+            </p>
+            <h3>Our Vision</h3>
+            <p>
+              Combining the restless energy of youth with the priceless wisdom
+              of experience to create an atmosphere where every student thrives
+              and excels.
+            </p>
+            <h3>Our Philosophy</h3>
+            <p>
+              "Take up one idea. Make that one idea your life—think of it, dream
+              of it, live on that idea." We create focused, transformative
+              learning experiences.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <div class="section-container container">
+        <div class="section-header">
+          <div class="section-badge">WHAT WE OFFER</div>
+          <h2 class="section-title">Comprehensive Training Solutions</h2>
+          <p class="section-subtitle">
+            End-to-end programs designed to transform potential into performance
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">💬</div>
+            <h3>Communication Skills</h3>
+            <p>
+              Master the art of effective communication through interactive
+              sessions and real-world practice scenarios.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎯</div>
+            <h3>Career Training</h3>
+            <p>
+              Comprehensive career development programs with proven placement
+              assistance and industry connections.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎓</div>
+            <h3>CLAP Program</h3>
+            <p>
+              Our flagship program preparing students for corporate excellence
+              through hands-on learning experiences.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🌟</div>
+            <h3>Personality Development</h3>
+            <p>
+              Build confidence, leadership skills, and professional presence to
+              stand out in any environment.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">👨‍🏫</div>
+            <h3>Faculty Development</h3>
+            <p>
+              Enhance teaching methodologies and stay updated with modern
+              educational practices and technologies.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🌍</div>
+            <h3>International Tests</h3>
+            <p>
+              Expert coaching for TOEFL, GRE, IELTS, and GMAT with proven
+              strategies for success.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🏢</div>
+            <h3>Campus Recruitment</h3>
+            <p>
+              On and off-campus placement drives connecting talent with top
+              employers across industries.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎪</div>
+            <h3>Event Management</h3>
+            <p>
+              Professional event planning and execution services for educational
+              and corporate clients.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🏆</div>
+            <h3>Olympiads & Exams</h3>
+            <p>
+              Preparation programs for competitive examinations and government
+              entrance tests.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology">
+      <div class="section-container container">
+        <div class="section-header">
+          <div class="section-badge">OUR APPROACH</div>
+          <h2 class="section-title">Activity-Based Learning Methodology</h2>
+          <p class="section-subtitle">
+            We don't lecture. We demonstrate, engage, and transform.
+          </p>
+        </div>
+        <div class="method-cards">
+          <div class="method-card">
+            <div class="method-number">01</div>
+            <h3>Practical Workshops</h3>
+            <p>
+              Hands-on training sessions that focus on real-world application
+              rather than theoretical concepts.
+            </p>
+          </div>
+          <div class="method-card">
+            <div class="method-number">02</div>
+            <h3>Active Participation</h3>
+            <p>
+              Students are active contributors, not passive listeners, ensuring
+              deeper engagement and retention.
+            </p>
+          </div>
+          <div class="method-card">
+            <div class="method-number">03</div>
+            <h3>Real-World Examples</h3>
+            <p>
+              Every concept is illustrated with day-to-day scenarios making
+              learning relatable and practical.
+            </p>
+          </div>
+          <div class="method-card">
+            <div class="method-number">04</div>
+            <h3>Individual Growth</h3>
+            <p>
+              We help each student discover their unique strengths and unlock
+              their inner potential.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients" id="clients">
+      <div class="section-container container">
+        <div class="section-header">
+          <div class="section-badge">OUR PARTNERS</div>
+          <h2 class="section-title">Trusted by Leading Institutions</h2>
+          <p class="section-subtitle">
+            Partnerships built on excellence, trust, and proven results
+          </p>
+        </div>
+        <div class="clients-categories">
+          <div class="client-category">
+            <h3>Educational Institutions</h3>
+            <ul class="client-list">
+              <li>VRS Engineering College</li>
+              <li>IFET College of Engineering</li>
+              <li>SRM University</li>
+              <li>St. Joseph's College of Engineering</li>
+              <li>PRIST University</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container container">
+        <div class="footer-section">
+          <h4>About LSE</h4>
+          <p>
+            LSE Global Academy has been transforming students since 2007 with
+            practical, activity-focused programs that bridge education and
+            industry.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>📍 Pondicherry, India</p>
+          <p>📞 +91 12345 67890</p>
+          <p>✉️ contact@lseglobal.academy</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Follow</h4>
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2007 - 2025 LSE Global Academy • All Rights Reserved
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const navLinks = document.getElementById("navLinks");
+        const mobileToggle = document.querySelector(".mobile-toggle");
+        if (!navLinks || !mobileToggle) return;
+
+        function toggleMenu() {
+          const isOpen = navLinks.classList.toggle("active");
+          mobileToggle.classList.toggle("open");
+          document.body.classList.toggle("no-scroll", isOpen);
+          mobileToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
+
+        // expose for inline onclick
+        window.toggleMenu = toggleMenu;
+
+        document.querySelectorAll(".nav-links a").forEach((a) => {
+          a.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+            mobileToggle.classList.remove("open");
+            document.body.classList.remove("no-scroll");
+            mobileToggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
