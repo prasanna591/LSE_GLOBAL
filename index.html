@@ -23,6 +23,16 @@
         --gray: #64748b;
         --light: #f1f5f9;
         --white: #ffffff;
+        --nav-link: var(--dark); /* default link color for nav */
+      }
+
+      /* Navbar color modes for different background contexts */
+      .nav--light {
+        --nav-link: var(--dark);
+      }
+
+      .nav--dark {
+        --nav-link: var(--white);
       }
 
       body {
@@ -72,7 +82,7 @@
       }
 
       .nav-links a {
-        color: rgba(255, 255, 255, 0.95);
+        color: var(--nav-link, var(--dark));
         text-decoration: none;
         font-weight: 600;
         transition: color 0.2s ease, transform 0.15s ease;
@@ -674,7 +684,7 @@
       .nav-links a {
         font-size: 1.1rem;
         padding: 0.75rem 0;
-        color: rgba(255, 255, 255, 0.96);
+        color: var(--nav-link, var(--dark));
       }
 
       /* Mobile toggle shows subtle glass when open */
