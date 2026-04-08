@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <title>LSE Global Academy | Empowering Future Leaders Since 2007</title>
     <style>
       * {
@@ -13,22 +14,29 @@
 
       :root {
         --nav-height: 70px;
-        --nav-glass: rgba(255, 255, 255, 0.06);
-        --primary: #6366f1;
-        --primary-dark: #4f46e5;
-        --secondary: #ec4899;
-        --accent: #f59e0b;
-        --dark: #0f172a;
-        --dark-light: #1e293b;
-        --gray: #64748b;
-        --light: #f1f5f9;
+        /* Custom glass effect */
+        --nav-glass: rgba(255, 255, 255, 0.12);
+        --primary: #2d5aa0; /* Professional blue */
+        --primary-dark: #1e3a5f;
+        --secondary: #f4a261; /* Warm orange */
+        --accent: #e76f51; /* Coral accent */
+        --dark: #1a1a2e; /* Deep navy */
+        --dark-light: #16213e;
+        --gray: #6c7293;
+        --light: #f8f9fa;
         --white: #ffffff;
-        --nav-link: var(--dark); /* default link color for nav */
+        --nav-link: var(--gray);
+        /* Custom shadows and borders */
+        --shadow-soft: 0 4px 20px rgba(45, 90, 160, 0.1);
+        --shadow-medium: 0 8px 32px rgba(45, 90, 160, 0.15);
+        --shadow-strong: 0 12px 48px rgba(45, 90, 160, 0.2);
+        --border-radius: 16px;
+        --border-radius-large: 24px;
       }
 
       /* Navbar color modes for different background contexts */
       .nav--light {
-        --nav-link: var(--dark);
+        --nav-link: var(--gray);
       }
 
       .nav--dark {
@@ -36,10 +44,11 @@
       }
 
       body {
-        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-        line-height: 1.6;
+        font-family: 'Inter', "Segoe UI", system-ui, -apple-system, sans-serif;
+        line-height: 1.7;
         color: var(--dark);
         overflow-x: hidden;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       }
 
       /* Navigation */
@@ -47,14 +56,13 @@
         position: fixed;
         top: 0;
         width: 100%;
-        /* unified glass nav that matches the opened mobile menu */
         background: var(--nav-glass);
-        -webkit-backdrop-filter: blur(8px) saturate(120%);
-        backdrop-filter: blur(8px) saturate(120%);
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
         z-index: 1000;
-        padding: 0.85rem 0;
-        box-shadow: 0 6px 18px rgba(12, 20, 40, 0.08);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(45, 90, 160, 0.08);
+        box-shadow: var(--shadow-soft);
       }
 
       .nav-container {
@@ -67,12 +75,14 @@
       }
 
       .logo {
-        font-size: 1.5rem;
-        font-weight: 800;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        letter-spacing: -0.02em;
       }
 
       .nav-links {
@@ -82,10 +92,12 @@
       }
 
       .nav-links a {
-        color: var(--nav-link, var(--dark));
+        color: var(--nav-link, var(--gray));
         text-decoration: none;
         font-weight: 600;
-        transition: color 0.2s ease, transform 0.15s ease;
+        transition:
+          color 0.2s ease,
+          transform 0.15s ease;
         position: relative;
       }
 
@@ -164,14 +176,12 @@
         }
       }
       .hero {
-        /* make hero background span the full viewport; nav overlays it */
         min-height: 100vh;
-        padding: calc(var(--nav-height) + 2rem) 1.5rem 2rem;
-        background: linear-gradient(
-          135deg,
-          var(--dark) 0%,
-          var(--dark-light) 100%
-        );
+        padding: calc(var(--nav-height) + 3rem) 1.5rem 3rem;
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(244, 162, 97, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(45, 90, 160, 0.1) 0%, transparent 50%),
+          linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
         position: relative;
         overflow: hidden;
         display: flex;
@@ -218,14 +228,49 @@
         pointer-events: none;
       }
 
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0) rotate(0deg);
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
         }
-        50% {
-          transform: translateY(-20px) rotate(5deg);
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+
+      .slide-in-left {
+        animation: slideInLeft 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+
+      .slide-in-right {
+        animation: slideInRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       }
 
       .hero-container {
@@ -252,10 +297,13 @@
       }
 
       .hero h1 {
-        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.8rem, 5vw, 4.2rem);
         color: var(--white);
-        margin-bottom: 1.5rem;
-        line-height: 1.2;
+        margin-bottom: 1.8rem;
+        line-height: 1.15;
+        font-weight: 500;
+        letter-spacing: -0.02em;
       }
 
       .hero h1 .highlight {
@@ -314,6 +362,23 @@
         color: var(--dark);
       }
 
+      .newsletter-hero {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .newsletter-hero p {
+        color: var(--gray);
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .newsletter-hero .newsletter-form {
+        justify-content: center;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
       /* Stats Section */
       .stats {
         background: var(--white);
@@ -327,12 +392,25 @@
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2.5rem;
         background: var(--white);
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        padding: 3.5rem;
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-medium);
+        border: 1px solid rgba(45, 90, 160, 0.05);
+        position: relative;
+      }
+
+      .stats-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
       }
 
       .stat-item {
@@ -380,9 +458,12 @@
       }
 
       .section-title {
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
         color: var(--dark);
         margin-bottom: 1rem;
+        font-weight: 500;
+        letter-spacing: -0.02em;
       }
 
       .section-subtitle {
@@ -462,13 +543,13 @@
 
       .service-card {
         background: var(--white);
-        padding: 2.5rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s;
+        padding: 2.8rem;
+        border-radius: var(--border-radius);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         border: 2px solid transparent;
         position: relative;
         overflow: hidden;
+        box-shadow: var(--shadow-soft);
       }
 
       .service-card::before {
@@ -480,7 +561,8 @@
         height: 4px;
         background: linear-gradient(90deg, var(--primary), var(--secondary));
         transform: scaleX(0);
-        transition: transform 0.3s;
+        transition: transform 0.4s ease;
+        transform-origin: left;
       }
 
       .service-card:hover::before {
@@ -488,9 +570,9 @@
       }
 
       .service-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
-        border-color: var(--primary);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: var(--shadow-strong);
+        border-color: rgba(45, 90, 160, 0.1);
       }
 
       .service-icon {
@@ -548,33 +630,36 @@
       }
 
       .method-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 2.5rem;
-        border-radius: 20px;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        padding: 2.8rem;
+        border-radius: var(--border-radius);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow-soft);
       }
 
       .method-card:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.98);
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: var(--shadow-medium);
       }
 
       .method-number {
         font-size: 3rem;
         font-weight: 800;
-        color: var(--accent);
+        color: var(--dark);
         margin-bottom: 1rem;
       }
 
       .method-card h3 {
         font-size: 1.4rem;
+        color: var(--dark);
         margin-bottom: 1rem;
       }
 
       .method-card p {
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--gray);
         line-height: 1.7;
       }
 
@@ -593,9 +678,16 @@
 
       .client-category {
         background: var(--white);
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        padding: 3.5rem;
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-medium);
+        border: 1px solid rgba(45, 90, 160, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .client-category:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-strong);
       }
 
       .client-category h3 {
@@ -630,8 +722,24 @@
       /* CTA Section */
       .cta-section {
         padding: 6rem 1.5rem;
-        background: var(--dark);
+        background: 
+          radial-gradient(circle at 30% 70%, rgba(244, 162, 97, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 70% 30%, rgba(45, 90, 160, 0.15) 0%, transparent 50%),
+          linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
         text-align: center;
+        position: relative;
+      }
+
+      .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.5;
+        pointer-events: none;
       }
 
       .cta-content {
@@ -659,14 +767,12 @@
       }
 
       .contact-info {
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-dark)
-        );
-        padding: 3rem;
-        border-radius: 20px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        padding: 3.5rem;
+        border-radius: var(--border-radius-large);
         color: var(--white);
+        box-shadow: var(--shadow-strong);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       .contact-info h3 {
@@ -684,12 +790,13 @@
       .nav-links a {
         font-size: 1.1rem;
         padding: 0.75rem 0;
-        color: var(--nav-link, var(--dark));
+        color: var(--nav-link, var(--gray));
       }
 
       /* Mobile toggle shows subtle glass when open */
       .mobile-toggle.open {
-        background: rgba(255, 255, 255, 0.04);
+        /* stronger so icon remains visible over varied backgrounds */
+        background: rgba(255, 255, 255, 0.1);
       }
 
       .contact-icon {
@@ -705,8 +812,10 @@
 
       .contact-form {
         background: var(--light);
-        padding: 3rem;
-        border-radius: 20px;
+        padding: 3.5rem;
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-medium);
+        border: 1px solid rgba(45, 90, 160, 0.05);
       }
 
       .form-group {
@@ -744,18 +853,35 @@
 
       /* Footer */
       footer {
-        background: var(--dark);
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(244, 162, 97, 0.08) 0%, transparent 50%),
+          linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
         color: var(--white);
-        padding: 3rem 1.5rem 1.5rem;
+        padding: 4rem 1.5rem 2rem;
+        position: relative;
+      }
+
+      footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="footer-grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.8" fill="rgba(255,255,255,0.02)"/><circle cx="90" cy="90" r="0.8" fill="rgba(255,255,255,0.02)"/><circle cx="50" cy="30" r="0.5" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23footer-grain)"/></svg>');
+        opacity: 0.3;
+        pointer-events: none;
       }
 
       .footer-container {
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 3rem;
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
+        position: relative;
+        z-index: 1;
       }
 
       .footer-section h4 {
@@ -776,11 +902,37 @@
         color: var(--primary);
       }
 
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid var(--gray);
+        border-radius: 5px;
+        background: var(--dark-light);
+        color: var(--white);
+      }
+
+      .newsletter-form input::placeholder {
+        color: var(--gray);
+      }
+
+      .newsletter-form .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
       .footer-bottom {
         text-align: center;
-        padding-top: 2rem;
-        border-top: 1px solid var(--dark-light);
+        padding-top: 2.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         color: var(--gray);
+        position: relative;
+        z-index: 1;
       }
 
       /* Mobile Menu */
@@ -803,7 +955,8 @@
           color: var(--white);
           flex-direction: column;
           padding: 2rem;
-          transition: left 0.28s cubic-bezier(0.2, 0.9, 0.2, 1),
+          transition:
+            left 0.28s cubic-bezier(0.2, 0.9, 0.2, 1),
             background 0.18s ease;
         }
 
@@ -926,14 +1079,21 @@
           </p>
           <div class="cta-group">
             <a href="#contact" class="btn btn-primary">Start Your Journey →</a>
-            <a href="#about" class="btn btn-secondary">Discover More</a>
+            <a href="#contact" class="btn btn-secondary">Get Free Consultation</a>
+          </div>
+          <div class="newsletter-hero">
+            <p>Subscribe for exclusive career tips and updates</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" required>
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="stats">
+    <section class="stats fade-in-up">
       <div class="stats-container container">
         <div class="stat-item">
           <div class="stat-number">16+</div>
@@ -955,7 +1115,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <section class="about fade-in-up" id="about">
       <div class="section-container container">
         <div class="section-header">
           <div class="section-badge">WHO WE ARE</div>
@@ -1012,7 +1172,7 @@
     </section>
 
     <!-- Services Section -->
-    <section class="services" id="services">
+    <section class="services fade-in-up" id="services">
       <div class="section-container container">
         <div class="section-header">
           <div class="section-badge">WHAT WE OFFER</div>
@@ -1099,7 +1259,7 @@
     </section>
 
     <!-- Methodology Section -->
-    <section class="methodology">
+    <section class="methodology fade-in-up">
       <div class="section-container container">
         <div class="section-header">
           <div class="section-badge">OUR APPROACH</div>
@@ -1146,7 +1306,7 @@
     </section>
 
     <!-- Clients Section -->
-    <section class="clients" id="clients">
+    <section class="clients fade-in-up" id="clients">
       <div class="section-container container">
         <div class="section-header">
           <div class="section-badge">OUR PARTNERS</div>
@@ -1166,6 +1326,46 @@
               <li>St. Joseph's College of Engineering</li>
               <li>PRIST University</li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="cta-section fade-in-up" id="contact">
+      <div class="cta-content">
+        <h2>Ready to Transform Your Future?</h2>
+        <p>
+          Join thousands of successful professionals who started their journey
+          with LSE Global Academy. Get in touch today!
+        </p>
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>Get Started Today</h3>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <strong>Call Us</strong><br />
+                +91 92347 67890
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <strong>Email Us</strong><br />
+                contact@lseglobal.academy
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <strong>Visit Us</strong><br />
+                Pondicherry, India
+              </div>
+            </div>
+          </div>
+          <div class="contact-form">
+           
           </div>
         </div>
       </div>
@@ -1196,15 +1396,57 @@
           <p>📍 Pondicherry, India</p>
           <p>📞 +91 12345 67890</p>
           <p>✉️ contact@lseglobal.academy</p>
+        <div class="footer-section">
+          <h4>Stay Updated</h4>
+          <p>Subscribe to our newsletter for the latest updates and career tips.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
         </div>
       </div>
 
       <div class="footer-bottom">
-        © 2007 - 2025 LSE Global Academy • All Rights Reserved
+        <p>&copy; 2007 - 2025 LSE Global Academy. All Rights Reserved. | Powered by Excellence in Education</p>
       </div>
     </footer>
 
     <script>
+      // Scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = "running";
+          }
+        });
+      }, observerOptions);
+
+      // Observe all animated sections
+      document
+        .querySelectorAll(".fade-in-up, .slide-in-left, .slide-in-right")
+        .forEach((el) => {
+          el.style.animationPlayState = "paused";
+          observer.observe(el);
+        });
+
+      // Add hover effects to service cards
+      document.querySelectorAll(".service-card").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          card.style.transform = "translateY(-12px) scale(1.03) rotate(1deg)";
+          card.style.boxShadow = "var(--shadow-strong)";
+        });
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "translateY(0) scale(1) rotate(0deg)";
+          card.style.boxShadow = "var(--shadow-soft)";
+        });
+      });
+
+      // Mobile menu toggle
       (function () {
         const navLinks = document.getElementById("navLinks");
         const mobileToggle = document.querySelector(".mobile-toggle");
