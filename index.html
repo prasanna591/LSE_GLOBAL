@@ -1,1660 +1,2175 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <title>LSE Global Academy | Empowering Future Leaders Since 2007</title>
+    <meta
+      name="description"
+      content="India's premier training and placement academy. Transforming potential into excellence since 2007."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      * {
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
       }
 
       :root {
-        --nav-height: 70px;
-        /* Custom glass effect */
-        --nav-glass: rgba(255, 255, 255, 0.12);
-        --primary: #2d5aa0; /* Professional blue */
-        --primary-dark: #1e3a5f;
-        --secondary: #f4a261; /* Warm orange */
-        --accent: #e76f51; /* Coral accent */
-        --dark: #1a1a2e; /* Deep navy */
-        --dark-light: #16213e;
-        --gray: #6c7293;
-        --light: #f8f9fa;
-        --white: #ffffff;
-        --nav-link: var(--gray);
-        /* Custom shadows and borders */
-        --shadow-soft: 0 4px 20px rgba(45, 90, 160, 0.1);
-        --shadow-medium: 0 8px 32px rgba(45, 90, 160, 0.15);
-        --shadow-strong: 0 12px 48px rgba(45, 90, 160, 0.2);
-        --border-radius: 16px;
-        --border-radius-large: 24px;
+        --black: #0a0a08;
+        --dark: #111110;
+        --card: #161614;
+        --border: rgba(255, 255, 255, 0.07);
+        --gold: #c9a84c;
+        --gold-light: #e8c96b;
+        --gold-pale: rgba(201, 168, 76, 0.12);
+        --white: #f5f2eb;
+        --muted: rgba(245, 242, 235, 0.45);
+        --font-display: "Playfair Display", serif;
+        --font-serif: "Cormorant Garamond", serif;
+        --font-body: "DM Sans", sans-serif;
       }
 
-      /* Navbar color modes for different background contexts */
-      .nav--light {
-        --nav-link: var(--gray);
-      }
-
-      .nav--dark {
-        --nav-link: var(--white);
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
-        font-family: 'Inter', "Segoe UI", system-ui, -apple-system, sans-serif;
-        line-height: 1.7;
-        color: var(--dark);
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--font-body);
+        font-weight: 300;
+        line-height: 1.6;
         overflow-x: hidden;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        cursor: none;
       }
 
-      /* Navigation */
+      /* ── CUSTOM CURSOR ── */
+      .cursor {
+        width: 10px;
+        height: 10px;
+        background: var(--gold);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.15s ease;
+        mix-blend-mode: difference;
+      }
+      .cursor-ring {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9998;
+        transition:
+          transform 0.35s ease,
+          width 0.3s,
+          height 0.3s,
+          opacity 0.3s;
+        opacity: 0.6;
+      }
+      body:hover .cursor-ring {
+        opacity: 0.6;
+      }
+
+      /* ── NOISE OVERLAY ── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 1000;
+        opacity: 0.4;
+      }
+
+      /* ── NAVIGATION ── */
       nav {
         position: fixed;
         top: 0;
-        width: 100%;
-        background: var(--nav-glass);
-        backdrop-filter: blur(12px) saturate(180%);
-        -webkit-backdrop-filter: blur(12px) saturate(180%);
-        z-index: 1000;
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(45, 90, 160, 0.08);
-        box-shadow: var(--shadow-soft);
-      }
-
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
+        left: 0;
+        right: 0;
+        z-index: 900;
+        padding: 28px 60px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+        transition: all 0.4s ease;
       }
-
-      .logo {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.6rem;
-        font-weight: 600;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: -0.02em;
+      nav.scrolled {
+        background: rgba(10, 10, 8, 0.92);
+        backdrop-filter: blur(20px);
+        padding: 18px 60px;
+        border-bottom: 1px solid var(--border);
       }
-
+      .nav-logo {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
       .nav-links {
         display: flex;
-        gap: 2rem;
+        gap: 40px;
         list-style: none;
       }
-
       .nav-links a {
-        color: var(--nav-link, var(--gray));
+        color: var(--muted);
         text-decoration: none;
-        font-weight: 600;
-        transition:
-          color 0.2s ease,
-          transform 0.15s ease;
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        transition: color 0.3s;
         position: relative;
       }
-
-      .nav-links a:hover {
-        color: var(--primary);
-        transform: translateY(-2px);
-      }
-
       .nav-links a::after {
         content: "";
         position: absolute;
-        bottom: -5px;
+        bottom: -4px;
         left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--primary);
-        transition: width 0.3s;
+        right: 0;
+        height: 1px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
       }
-
+      .nav-links a:hover {
+        color: var(--gold);
+      }
       .nav-links a:hover::after {
-        width: 100%;
+        transform: scaleX(1);
+      }
+      .nav-cta {
+        background: var(--gold);
+        color: var(--black);
+        padding: 10px 26px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      .nav-cta:hover {
+        background: var(--gold-light);
+        transform: translateY(-1px);
       }
 
-      .mobile-toggle {
-        display: none;
+      /* ── HERO ── */
+      #home {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-left {
+        display: flex;
         flex-direction: column;
-        gap: 4px;
-        cursor: pointer;
-        padding: 0.75rem;
-        border-radius: var(--border-radius);
-        background: var(--nav-glass);
-        -webkit-backdrop-filter: blur(8px) saturate(120%);
-        backdrop-filter: blur(8px) saturate(120%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        justify-content: flex-end;
+        padding: 160px 60px 80px;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid var(--border);
+        padding: 8px 18px;
+        width: fit-content;
+        margin-bottom: 36px;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.2s forwards;
+      }
+      .hero-badge span {
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .hero-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .hero-h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 5vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 28px;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.4s forwards;
+      }
+      .hero-h1 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .hero-sub {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+        color: var(--muted);
+        max-width: 420px;
+        margin-bottom: 48px;
+        line-height: 1.8;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.6s forwards;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 16px;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.8s forwards;
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: var(--black);
+        padding: 16px 36px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
       }
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-light);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .btn-primary:hover::before {
+        transform: translateX(0);
+      }
+      .btn-primary span {
+        position: relative;
+        z-index: 1;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--white);
+        padding: 16px 36px;
+        font-size: 0.82rem;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+      }
 
-      .mobile-toggle::before {
-        content: '';
+      .hero-right {
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-img-wrap {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        animation: fadeIn 1.2s 0.3s forwards;
+      }
+      .hero-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(20%) brightness(0.65);
+      }
+      .hero-img-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to right, var(--black) 0%, transparent 40%),
+          linear-gradient(to top, var(--black) 0%, transparent 50%);
+      }
+
+      /* Floating stats card */
+      .hero-stats-card {
+        position: absolute;
+        bottom: clamp(40px, 5vh, 80px);
+        right: clamp(20px, 4vw, 80px);
+        left: auto;
+        width: min(520px, calc(100% - 40px));
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 28px 30px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+        grid-auto-rows: minmax(120px, auto);
+        align-items: stretch;
+        justify-items: stretch;
+        z-index: 3;
+        opacity: 0;
+        animation: fadeUp 0.9s 1s forwards;
+      }
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+        min-height: 100px;
+      }
+      .stat-num {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 2.3vw, 2.2rem);
+        font-weight: 700;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0;
+        line-height: 1.5;
+        max-width: 100%;
+      }
+
+      /* Vertical text */
+      .hero-vertical-text {
+        position: absolute;
+        right: 40px;
+        bottom: 80px;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        z-index: 3;
+        opacity: 0;
+        animation: fadeIn 1s 1.2s forwards;
+      }
+
+      /* Scroll indicator */
+      .scroll-indicator {
+        position: absolute;
+        bottom: 36px;
+        left: 60px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        opacity: 0;
+        animation: fadeUp 0.8s 1.4s forwards;
+        z-index: 3;
+      }
+      .scroll-line {
+        width: 40px;
+        height: 1px;
+        background: var(--gold);
+        position: relative;
+        overflow: hidden;
+      }
+      .scroll-line::after {
+        content: "";
         position: absolute;
         top: 0;
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        transition: left 0.5s ease;
+        background: var(--white);
+        animation: scrollLine 2s 1.4s infinite;
       }
-
-      .mobile-toggle:hover::before {
-        left: 100%;
-      }
-
-      .mobile-toggle:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: scale(1.05);
-        box-shadow: var(--shadow-soft);
-      }
-
-      .mobile-toggle span {
-        width: 24px;
-        height: 2px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        border-radius: 1px;
-        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        transform-origin: center;
-        position: relative;
-      }
-
-      .mobile-toggle span:nth-child(1) {
-        transform: translateY(-1px);
-      }
-
-      .mobile-toggle span:nth-child(3) {
-        transform: translateY(1px);
-      }
-
-      /* mobile toggle open state */
-      .mobile-toggle.open span:nth-child(1) {
-        transform: translateY(6px) rotate(45deg);
-        background: var(--accent);
-      }
-
-      .mobile-toggle.open span:nth-child(2) {
-        opacity: 0;
-        transform: scaleX(0);
-      }
-
-      .mobile-toggle.open span:nth-child(3) {
-        transform: translateY(-6px) rotate(-45deg);
-        background: var(--accent);
-      }
-
-      /* Hero Section */
-      @media (max-width: 900px) {
-        .hero-container {
-          justify-content: center;
-          padding: 0 1rem;
+      @keyframes scrollLine {
+        0% {
+          left: -100%;
         }
-        .hero::before,
-        .hero::after {
-          opacity: 0.15;
-        }
-        .hero::before {
-          width: 80vmax;
-          height: 80vmax;
-          top: -40vmax;
-          right: -40vmax;
-        }
-        .hero::after {
-          width: 60vmax;
-          height: 60vmax;
-          bottom: -30vmax;
-          left: -30vmax;
+        100% {
+          left: 100%;
         }
       }
-      .hero {
-        min-height: 100vh;
-        padding: calc(var(--nav-height) + 3rem) 1.5rem 3rem;
-        background: 
-          radial-gradient(circle at 20% 80%, rgba(244, 162, 97, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(45, 90, 160, 0.1) 0%, transparent 50%),
-          linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-        position: relative;
+
+      /* ── MARQUEE ── */
+      .marquee-section {
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 18px 0;
         overflow: hidden;
+        background: var(--card);
+      }
+      .marquee-track {
+        display: flex;
+        gap: 60px;
+        animation: marquee 25s linear infinite;
+        width: max-content;
+      }
+      .marquee-item {
         display: flex;
         align-items: center;
+        gap: 18px;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .marquee-dot {
+        width: 4px;
+        height: 4px;
+        background: var(--gold);
+        border-radius: 50%;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
       }
 
-      /* Give desktop hero a bit more breathing room at the bottom and reduce stats overlap */
-      @media (min-width: 900px) {
-        .hero {
-          padding-bottom: 4.5rem;
-        }
-        .stats {
-          margin-top: -30px;
-        }
+      /* ── SECTIONS COMMON ── */
+      section {
+        padding: 120px 60px;
+      }
+      .section-tag {
+        font-size: 0.68rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .section-tag::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--gold);
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--gold);
       }
 
-      .hero::before {
+      /* Reveal animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+      .reveal-delay-5 {
+        transition-delay: 0.5s;
+      }
+
+      /* ── ABOUT ── */
+      #about {
+        background: var(--dark);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 100px;
+        align-items: center;
+        padding: 120px 60px;
+      }
+      .about-img-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 16px;
+        position: relative;
+      }
+      .about-img-main {
+        grid-column: 1 / 3;
+        height: 320px;
+        overflow: hidden;
+        position: relative;
+      }
+      .about-img-main img,
+      .about-img-sm img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(15%) brightness(0.75);
+        transition:
+          transform 0.8s ease,
+          filter 0.5s;
+      }
+      .about-img-main:hover img,
+      .about-img-sm:hover img {
+        transform: scale(1.04);
+        filter: grayscale(0%) brightness(0.9);
+      }
+      .about-img-sm {
+        height: 200px;
+        overflow: hidden;
+      }
+      .about-img-badge {
+        position: absolute;
+        bottom: -20px;
+        right: -20px;
+        background: var(--gold);
+        color: var(--black);
+        padding: 20px 24px;
+        font-family: var(--font-display);
+        font-weight: 700;
+        z-index: 2;
+      }
+      .about-img-badge strong {
+        font-size: 2rem;
+        display: block;
+        line-height: 1;
+      }
+      .about-img-badge span {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .about-content {
+        padding-left: 20px;
+      }
+      .about-desc {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        color: var(--muted);
+        line-height: 1.9;
+        margin-bottom: 36px;
+      }
+      .about-features {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 40px;
+      }
+      .about-features li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 0.9rem;
+        color: var(--muted);
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .about-features li::before {
+        content: "→";
+        color: var(--gold);
+        font-size: 0.85rem;
+      }
+
+      /* ── SERVICES ── */
+      #services {
+        background: var(--black);
+      }
+      .services-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: end;
+        margin-bottom: 70px;
+      }
+      .services-desc {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        color: var(--muted);
+        line-height: 1.9;
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+      }
+      .service-card {
+        background: var(--card);
+        padding: 44px 36px;
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        cursor: none;
+      }
+      .service-card::before {
         content: "";
         position: absolute;
-        width: 60vmax;
-        height: 60vmax;
-        background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-        top: -30vmax;
-        right: -30vmax;
-        opacity: 0.3;
-        animation: float 6s ease-in-out infinite;
-        pointer-events: none;
+        inset: 0;
+        background: var(--gold-pale);
+        transform: translateY(100%);
+        transition: transform 0.5s ease;
+      }
+      .service-card:hover::before {
+        transform: translateY(0);
+      }
+      .service-card:hover {
+        border-color: rgba(201, 168, 76, 0.3);
+      }
+      .service-card:hover .service-icon {
+        color: var(--gold);
+        transform: scale(1.1);
+      }
+      .service-icon {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        display: block;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+      .service-num {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        font-family: var(--font-serif);
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--border);
+        line-height: 1;
+        transition: color 0.3s;
+      }
+      .service-card:hover .service-num {
+        color: rgba(201, 168, 76, 0.15);
+      }
+      .service-title {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+        position: relative;
+        z-index: 1;
+        transition: color 0.3s;
+      }
+      .service-card:hover .service-title {
+        color: var(--gold);
+      }
+      .service-desc {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.8;
+        position: relative;
+        z-index: 1;
       }
 
-      .hero::after {
-        content: "";
+      /* ── METHODOLOGY ── */
+      #methodology {
+        background: var(--dark);
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 100px;
+        align-items: center;
+      }
+      .method-img {
+        position: relative;
+        height: 600px;
+        overflow: hidden;
+      }
+      .method-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.7);
+      }
+      .method-img-overlay {
         position: absolute;
-        width: 50vmax;
-        height: 50vmax;
-        background: radial-gradient(
-          circle,
-          var(--secondary) 0%,
-          transparent 70%
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(201, 168, 76, 0.2) 0%,
+          transparent 60%
         );
-        bottom: -25vmax;
-        left: -25vmax;
-        opacity: 0.3;
-        animation: float 8s ease-in-out infinite reverse;
-        pointer-events: none;
+      }
+      .method-quote {
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+        padding: 28px 36px;
+        background: rgba(10, 10, 8, 0.85);
+        backdrop-filter: blur(10px);
+        border-left: 3px solid var(--gold);
+      }
+      .method-quote p {
+        font-family: var(--font-serif);
+        font-size: 1.05rem;
+        font-style: italic;
+        color: var(--white);
+        line-height: 1.7;
+      }
+      .method-quote cite {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 12px;
+        font-style: normal;
+      }
+      .method-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .method-step {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 28px;
+        padding: 36px 0;
+        border-bottom: 1px solid var(--border);
+        align-items: start;
+        transition: all 0.3s ease;
+        cursor: none;
+      }
+      .method-step:hover {
+        padding-left: 12px;
+      }
+      .method-step:last-child {
+        border-bottom: none;
+      }
+      .step-num {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--border);
+        line-height: 1;
+        transition: color 0.3s;
+      }
+      .method-step:hover .step-num {
+        color: var(--gold);
+      }
+      .step-title {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .step-desc {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.7;
       }
 
-      @keyframes fadeInUp {
+      /* ── PARTNERS ── */
+      #clients {
+        background: var(--black);
+        text-align: center;
+      }
+      .partners-intro {
+        max-width: 600px;
+        margin: 0 auto 70px;
+      }
+      .partners-desc {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .partners-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-bottom: 50px;
+      }
+      .tab-btn {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        padding: 10px 28px;
+        font-family: var(--font-body);
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: none;
+        transition: all 0.3s ease;
+      }
+      .tab-btn.active,
+      .tab-btn:hover {
+        background: var(--gold);
+        color: var(--black);
+        border-color: var(--gold);
+      }
+      .partners-panel {
+        display: none;
+      }
+      .partners-panel.active {
+        display: grid;
+      }
+      .partners-school-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2px;
+      }
+      .partner-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 28px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s ease;
+        text-align: left;
+      }
+      .partner-item:hover {
+        border-color: rgba(201, 168, 76, 0.3);
+        background: var(--gold-pale);
+      }
+      .partner-icon {
+        font-size: 1.6rem;
+        flex-shrink: 0;
+      }
+      .partner-name {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+      .partner-item:hover .partner-name {
+        color: var(--white);
+      }
+
+      /* ── TESTIMONIALS ── */
+      #testimonials {
+        background: var(--dark);
+        overflow: hidden;
+      }
+      .testimonials-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        margin-bottom: 60px;
+        gap: 40px;
+      }
+      .testimonial-controls {
+        display: flex;
+        gap: 12px;
+      }
+      .tctrl {
+        width: 48px;
+        height: 48px;
+        border: 1px solid var(--border);
+        background: none;
+        color: var(--white);
+        font-size: 1.2rem;
+        cursor: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+      .tctrl:hover {
+        background: var(--gold);
+        color: var(--black);
+        border-color: var(--gold);
+      }
+      .testimonials-track {
+        display: flex;
+        gap: 24px;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .testimonial-card {
+        min-width: calc(50% - 12px);
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 48px;
+        position: relative;
+        overflow: hidden;
+      }
+      .testimonial-card::before {
+        content: '"';
+        position: absolute;
+        top: -20px;
+        right: 32px;
+        font-family: var(--font-display);
+        font-size: 12rem;
+        color: var(--gold-pale);
+        line-height: 1;
+        font-weight: 900;
+      }
+      .test-text {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+        line-height: 1.9;
+        color: var(--white);
+        margin-bottom: 36px;
+        position: relative;
+        z-index: 1;
+        font-style: italic;
+      }
+      .test-author {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .test-avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid var(--gold);
+        flex-shrink: 0;
+      }
+      .test-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .test-name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      .test-role {
+        font-size: 0.78rem;
+        color: var(--gold);
+        letter-spacing: 0.08em;
+      }
+      .test-stars {
+        color: var(--gold);
+        font-size: 0.85rem;
+        margin-top: 4px;
+      }
+
+      /* ── CONTACT ── */
+      #contact {
+        background: var(--black);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 100px;
+        align-items: start;
+      }
+      .contact-left {
+        padding-top: 20px;
+      }
+      .contact-tagline {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--muted);
+        margin-bottom: 50px;
+        line-height: 1.8;
+      }
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 48px;
+      }
+      .contact-row {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 20px;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+      }
+      .contact-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .contact-value {
+        font-family: var(--font-serif);
+        font-size: 1.05rem;
+        color: var(--white);
+      }
+      .contact-img {
+        height: 200px;
+        overflow: hidden;
+        margin-bottom: 0;
+      }
+      .contact-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.65);
+        transition: transform 0.6s ease;
+      }
+      .contact-img:hover img {
+        transform: scale(1.04);
+      }
+
+      /* Form */
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .form-group {
+        position: relative;
+        border-bottom: 1px solid var(--border);
+        transition: border-color 0.3s;
+      }
+      .form-group:focus-within {
+        border-color: var(--gold);
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 20px 0 6px;
+        transition: color 0.3s;
+      }
+      .form-group:focus-within label {
+        color: var(--gold);
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--white);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        padding: 0 0 20px;
+      }
+      .form-group select option {
+        background: var(--dark);
+      }
+      .form-group textarea {
+        resize: none;
+        min-height: 100px;
+      }
+      .form-submit {
+        margin-top: 36px;
+        background: var(--gold);
+        color: var(--black);
+        border: none;
+        padding: 18px 48px;
+        font-family: var(--font-body);
+        font-size: 0.82rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: none;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+      }
+      .form-submit:hover {
+        background: var(--gold-light);
+        transform: translateY(-2px);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: var(--dark);
+        border-top: 1px solid var(--border);
+        padding: 60px 60px 36px;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 60px;
+        margin-bottom: 60px;
+      }
+      .footer-brand-name {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      .footer-brand-name span {
+        color: var(--gold);
+      }
+      .footer-brand-desc {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-bottom: 28px;
+      }
+      .footer-col h4 {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 24px;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .footer-col ul li a {
+        font-size: 0.9rem;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .footer-col ul li a:hover {
+        color: var(--white);
+        padding-left: 6px;
+      }
+      .footer-bottom {
+        border-top: 1px solid var(--border);
+        padding-top: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .footer-copy {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .footer-copy span {
+        color: var(--gold);
+      }
+
+      /* WhatsApp FAB */
+      .whatsapp-fab {
+        position: fixed;
+        bottom: 36px;
+        right: 36px;
+        width: 56px;
+        height: 56px;
+        background: #25d366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 800;
+        text-decoration: none;
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        transition: all 0.3s ease;
+        font-size: 1.5rem;
+      }
+      .whatsapp-fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+      }
+
+      /* ── KEYFRAMES ── */
+      @keyframes fadeUp {
         from {
           opacity: 0;
-          transform: translateY(40px);
+          transform: translateY(30px);
         }
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
-
-      @keyframes slideInLeft {
+      @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateX(-40px);
         }
         to {
           opacity: 1;
-          transform: translateX(0);
         }
       }
 
-      @keyframes slideInRight {
-        from {
-          opacity: 0;
-          transform: translateX(40px);
+      /* ── RESPONSIVE ── */
+      @media (max-width: 1024px) {
+        nav {
+          padding: 24px 30px;
         }
-        to {
-          opacity: 1;
-          transform: translateX(0);
+        nav.scrolled {
+          padding: 16px 30px;
         }
-      }
-
-      .fade-in-up {
-        animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      }
-
-      .slide-in-left {
-        animation: slideInLeft 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      }
-
-      .slide-in-right {
-        animation: slideInRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      }
-
-      .hero-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero-content {
-        max-width: 700px;
-      }
-
-      .hero-badge {
-        display: inline-block;
-        background: rgba(99, 102, 241, 0.2);
-        color: var(--primary);
-        padding: 0.5rem 1.5rem;
-        border-radius: 50px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        border: 2px solid var(--primary);
-      }
-
-      .hero h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2.8rem, 5vw, 4.2rem);
-        color: var(--white);
-        margin-bottom: 1.8rem;
-        line-height: 1.15;
-        font-weight: 500;
-        letter-spacing: -0.02em;
-      }
-
-      .hero h1 .highlight {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .hero p {
-        font-size: 1.25rem;
-        color: var(--gray);
-        margin-bottom: 2.5rem;
-        line-height: 1.8;
-      }
-
-      .cta-group {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .btn {
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: var(--white);
-        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
-      }
-
-      .btn-secondary {
-        background: transparent;
-        color: var(--white);
-        border: 2px solid var(--white);
-      }
-
-      .btn-secondary:hover {
-        background: var(--white);
-        color: var(--dark);
-      }
-
-      .newsletter-hero {
-        margin-top: 2rem;
-        text-align: center;
-      }
-
-      .newsletter-hero p {
-        color: var(--gray);
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-      }
-
-      .newsletter-hero .newsletter-form {
-        justify-content: center;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-
-      /* Stats Section */
-      .stats {
-        background: var(--white);
-        padding: 3rem 1.5rem;
-        margin-top: -50px;
-        position: relative;
-        z-index: 2;
-      }
-
-      .stats-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 2.5rem;
-        background: var(--white);
-        padding: 3.5rem;
-        border-radius: var(--border-radius-large);
-        box-shadow: var(--shadow-medium);
-        border: 1px solid rgba(45, 90, 160, 0.05);
-        position: relative;
-      }
-
-      .stats-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-        border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
-      }
-
-      .stat-item {
-        text-align: center;
-      }
-
-      .stat-number {
-        font-size: 3rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 0.5rem;
-      }
-
-      .stat-label {
-        color: var(--gray);
-        font-weight: 600;
-      }
-
-      /* About Section */
-      .about {
-        padding: 6rem 1.5rem;
-        background: var(--light);
-      }
-
-      .section-container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .section-header {
-        text-align: center;
-        margin-bottom: 4rem;
-      }
-
-      .section-badge {
-        color: var(--primary);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-      }
-
-      .section-title {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2.2rem, 4vw, 3.2rem);
-        color: var(--dark);
-        margin-bottom: 1rem;
-        font-weight: 500;
-        letter-spacing: -0.02em;
-      }
-
-      .section-subtitle {
-        font-size: 1.2rem;
-        color: var(--gray);
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .about-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 3rem;
-        align-items: center;
-      }
-
-      .about-text {
-        background: var(--white);
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      }
-
-      .about-text h3 {
-        font-size: 1.8rem;
-        color: var(--dark);
-        margin-bottom: 1.5rem;
-      }
-
-      .about-text p {
-        color: var(--gray);
-        margin-bottom: 1.5rem;
-        line-height: 1.8;
-      }
-
-      .feature-list {
-        list-style: none;
-        margin-top: 2rem;
-      }
-
-      .feature-list li {
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--light);
-        color: var(--dark);
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .feature-list li::before {
-        content: "✓";
-        width: 30px;
-        height: 30px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: var(--white);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        flex-shrink: 0;
-      }
-
-      /* Services Section */
-      .services {
-        padding: 6rem 1.5rem;
-        background: var(--white);
-      }
-
-      .services-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-      }
-
-      .service-card {
-        background: var(--white);
-        padding: 2.8rem;
-        border-radius: var(--border-radius);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 2px solid transparent;
-        position: relative;
-        overflow: hidden;
-        box-shadow: var(--shadow-soft);
-      }
-
-      .service-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        transform: scaleX(0);
-        transition: transform 0.4s ease;
-        transform-origin: left;
-      }
-
-      .service-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .service-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: var(--shadow-strong);
-        border-color: rgba(45, 90, 160, 0.1);
-      }
-
-      .service-icon {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-        color: var(--white);
-      }
-
-      .service-card h3 {
-        font-size: 1.4rem;
-        color: var(--dark);
-        margin-bottom: 1rem;
-      }
-
-      .service-card p {
-        color: var(--gray);
-        line-height: 1.7;
-      }
-
-      /* Methodology Section */
-      .methodology {
-        padding: 6rem 1.5rem;
-        background: linear-gradient(
-          135deg,
-          var(--primary) 0%,
-          var(--primary-dark) 100%
-        );
-        color: var(--white);
-      }
-
-      .methodology .section-badge {
-        color: var(--accent);
-      }
-
-      .methodology .section-title {
-        color: var(--white);
-      }
-
-      .methodology .section-subtitle {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      .method-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-      }
-
-      .method-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 2.8rem;
-        border-radius: var(--border-radius);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: var(--shadow-soft);
-      }
-
-      .method-card:hover {
-        background: rgba(255, 255, 255, 0.98);
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: var(--shadow-medium);
-      }
-
-      .method-number {
-        font-size: 3rem;
-        font-weight: 800;
-        color: var(--dark);
-        margin-bottom: 1rem;
-      }
-
-      .method-card h3 {
-        font-size: 1.4rem;
-        color: var(--dark);
-        margin-bottom: 1rem;
-      }
-
-      .method-card p {
-        color: var(--gray);
-        line-height: 1.7;
-      }
-
-      /* Clients Section */
-      .clients {
-        padding: 6rem 1.5rem;
-        background:
-          linear-gradient(135deg, var(--light) 0%, rgba(248, 249, 250, 0.8) 100%),
-          radial-gradient(circle at 20% 80%, rgba(45, 90, 160, 0.03) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(244, 162, 97, 0.03) 0%, transparent 50%);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .clients::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(45,90,160,0.02)"/><circle cx="75" cy="75" r="1" fill="rgba(244,162,97,0.02)"/><circle cx="50" cy="10" r="0.5" fill="rgba(231,111,81,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        opacity: 0.5;
-        pointer-events: none;
-      }
-
-      .clients-categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2.5rem;
-        margin-top: 4rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      .client-category {
-        background: var(--white);
-        padding: 3rem;
-        border-radius: var(--border-radius-large);
-        box-shadow: var(--shadow-medium);
-        border: 1px solid rgba(45, 90, 160, 0.08);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .client-category::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-
-      .client-category:hover::before {
-        transform: scaleX(1);
-      }
-
-      .client-category:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: var(--shadow-strong);
-        border-color: rgba(45, 90, 160, 0.15);
-      }
-
-      .client-category:nth-child(1) h3::before {
-        content: '🏫';
-      }
-
-      .client-category:nth-child(2) h3::before {
-        content: '🎓';
-      }
-
-      .client-category:nth-child(3) h3::before {
-        content: '🏢';
-      }
-
-      .client-category h3 {
-        font-size: 1.6rem;
-        color: var(--dark);
-        margin-bottom: 2.5rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 2px solid rgba(45, 90, 160, 0.1);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-weight: 700;
-      }
-
-      .client-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .client-list li {
-        padding: 1.25rem 0;
-        color: var(--gray);
-        border-bottom: 1px solid rgba(45, 90, 160, 0.06);
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        border-radius: 8px;
-        padding-left: 1rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .client-list li:hover {
-        background: rgba(45, 90, 160, 0.02);
-        color: var(--dark);
-        transform: translateX(4px);
-        border-radius: 8px;
-        padding-left: 1.5rem;
-      }
-
-      .client-list li::before {
-        content: '🏛️';
-        font-size: 1.1rem;
-        opacity: 0.7;
-        transition: all 0.3s ease;
-      }
-
-      .client-list li:hover::before {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-
-      .client-list li:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-      }
-
-      /* CTA Section */
-      .cta-section {
-        padding: 6rem 1.5rem;
-        background: 
-          radial-gradient(circle at 30% 70%, rgba(244, 162, 97, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 70% 30%, rgba(45, 90, 160, 0.15) 0%, transparent 50%),
-          linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-        text-align: center;
-        position: relative;
-      }
-
-      .cta-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        opacity: 0.5;
-        pointer-events: none;
-      }
-
-      .cta-content {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .cta-section h2 {
-        font-size: clamp(2rem, 4vw, 3rem);
-        color: var(--white);
-        margin-bottom: 1.5rem;
-      }
-
-      .cta-section p {
-        font-size: 1.2rem;
-        color: var(--gray);
-        margin-bottom: 3rem;
-      }
-
-      .contact-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 3rem;
-        margin-top: 3rem;
-      }
-
-      .contact-info {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        padding: 3.5rem;
-        border-radius: var(--border-radius-large);
-        color: var(--white);
-        box-shadow: var(--shadow-strong);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .contact-info h3 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .contact-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        margin-bottom: 2rem;
-      }
-      /* Slightly larger and more tappable links on mobile */
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 0.75rem 0;
-        color: var(--nav-link, var(--gray));
-      }
-
-      /* Mobile toggle shows enhanced glass when open */
-      .mobile-toggle.open {
-        background: rgba(255, 255, 255, 0.2);
-        box-shadow: var(--shadow-medium);
-        transform: scale(1.05);
-      }
-
-      .contact-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-
-      .contact-form {
-        background: var(--light);
-        padding: 3.5rem;
-        border-radius: var(--border-radius-large);
-        box-shadow: var(--shadow-medium);
-        border: 1px solid rgba(45, 90, 160, 0.05);
-      }
-
-      .contact-card {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-
-      .contact-card h3 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-        color: var(--dark);
-      }
-
-      .contact-card p {
-        color: var(--gray);
-        line-height: 1.8;
-      }
-
-      .contact-benefits {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        gap: 0.75rem;
-      }
-
-      .contact-benefits li {
-        padding: 0.85rem 1rem;
-        background: rgba(45, 90, 160, 0.06);
-        border-radius: 12px;
-        color: var(--dark);
-      }
-
-      .contact-form iframe {
-        width: 100%;
-        min-height: 520px;
-        border-radius: 18px;
-        border: 1px solid rgba(15, 23, 42, 0.08);
-      }
-
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .form-group label {
-        display: block;
-        color: var(--dark);
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      .form-group input,
-      .form-group textarea {
-        width: 100%;
-        padding: 1rem;
-        border: 2px solid transparent;
-        border-radius: 10px;
-        font-size: 1rem;
-        background: var(--white);
-        transition: all 0.3s;
-      }
-
-      .form-group input:focus,
-      .form-group textarea:focus {
-        outline: none;
-        border-color: var(--primary);
-      }
-
-      .form-group textarea {
-        resize: vertical;
-        min-height: 150px;
-      }
-
-      /* Footer */
-      footer {
-        background: 
-          radial-gradient(circle at 20% 80%, rgba(244, 162, 97, 0.08) 0%, transparent 50%),
-          linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-        color: var(--white);
-        padding: 4rem 1.5rem 2rem;
-        position: relative;
-      }
-
-      footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="footer-grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.8" fill="rgba(255,255,255,0.02)"/><circle cx="90" cy="90" r="0.8" fill="rgba(255,255,255,0.02)"/><circle cx="50" cy="30" r="0.5" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23footer-grain)"/></svg>');
-        opacity: 0.3;
-        pointer-events: none;
-      }
-
-      .footer-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 3rem;
-        margin-bottom: 3rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      .footer-section h4 {
-        font-size: 1.3rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .footer-section p,
-      .footer-section a {
-        color: var(--gray);
-        text-decoration: none;
-        display: block;
-        margin-bottom: 0.8rem;
-        transition: color 0.3s;
-      }
-
-      .footer-section a:hover {
-        color: var(--primary);
-      }
-
-      .newsletter-form {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 1rem;
-      }
-
-      .newsletter-form input {
-        flex: 1;
-        padding: 0.5rem;
-        border: 1px solid var(--gray);
-        border-radius: 5px;
-        background: var(--dark-light);
-        color: var(--white);
-      }
-
-      .newsletter-form input::placeholder {
-        color: var(--gray);
-      }
-
-      .newsletter-form .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-      }
-
-      .footer-bottom {
-        text-align: center;
-        padding-top: 2.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--gray);
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Mobile Menu */
-      @media (max-width: 768px) {
-        .mobile-toggle {
-          display: flex;
+        #home {
+          grid-template-columns: 1fr;
         }
-
+        .hero-left {
+          padding: 140px 30px 60px;
+        }
+        .hero-right {
+          display: none;
+        }
+        .hero-stats-card {
+          left: 30px;
+          bottom: 60px;
+        }
+        #about {
+          grid-template-columns: 1fr;
+          padding: 80px 30px;
+          gap: 60px;
+        }
+        .about-content {
+          padding-left: 0;
+        }
+        section {
+          padding: 80px 30px;
+        }
+        .services-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        #methodology {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+        .method-img {
+          height: 380px;
+        }
+        #contact {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+        .footer-top {
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+        }
         .nav-links {
-          position: fixed;
-          top: var(--nav-height);
-          left: -100%;
-          width: 100%;
-          height: calc(100vh - var(--nav-height));
-          background: var(--nav-glass);
-          -webkit-backdrop-filter: blur(10px) saturate(120%);
-          backdrop-filter: blur(10px) saturate(120%);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          box-shadow: 0 12px 40px rgba(2, 6, 23, 0.45);
-          color: var(--white);
-          flex-direction: column;
-          padding: 2rem;
-          transition:
-            left 0.28s cubic-bezier(0.2, 0.9, 0.2, 1),
-            background 0.18s ease;
-        }
-
-        .nav-links.active {
-          left: 0;
-        }
-
-        .cta-group {
-          flex-direction: column;
-        }
-
-        .btn {
-          text-align: center;
-          justify-content: center;
-        }
-
-        .stats-container {
-          padding: 2rem 1rem;
-        }
-
-        .about-text {
-          padding: 2rem;
-        }
-
-        .contact-info,
-        .contact-form {
-          padding: 2rem;
-        }
-      }
-      /* Small-screen fixes to avoid overlap and hidden content */
-      html {
-        scroll-padding-top: var(--nav-height);
-      }
-
-      .nav-links {
-        z-index: 1101;
-      }
-      body.no-scroll {
-        overflow: hidden;
-      }
-
-      @media (max-width: 768px) {
-        .stats {
-          margin-top: -25px;
+          display: none;
         }
       }
 
-      @media (max-width: 480px) {
-        :root {
-          --nav-height: 64px;
+      @media (max-width: 640px) {
+        .services-grid {
+          grid-template-columns: 1fr;
         }
-        .hero {
-          padding: calc(var(--nav-height) + 1rem) 1rem 1.25rem;
+        .services-header {
+          grid-template-columns: 1fr;
         }
-        .hero h1 {
-          font-size: 1.9rem;
-          text-align: center;
+        .testimonial-card {
+          min-width: 100%;
         }
-        .hero p {
-          font-size: 1rem;
-          margin-bottom: 1rem;
-          text-align: center;
+        .footer-top {
+          grid-template-columns: 1fr;
         }
-        .stats {
-          margin-top: 0;
+        .hero-stats-card {
+          display: none;
         }
-        .section-container.container,
-        .services-grid,
-        .method-cards {
-          padding: 0 0.5rem;
-        }
-        .service-card,
-        .about-text,
-        .contact-form,
-        .client-category {
-          padding: 1rem;
+        #home {
+          min-height: 100svh;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Navigation -->
-    <nav>
-      <div class="nav-container">
-        <div class="logo">LSE GLOBAL</div>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#clients">Clients</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button
-          class="mobile-toggle"
-          type="button"
-          aria-label="Toggle menu"
-          aria-controls="navLinks"
-          aria-expanded="false"
-          onclick="toggleMenu()"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- WhatsApp FAB -->
+    <a
+      href="https://wa.me/919234767890"
+      class="whatsapp-fab"
+      target="_blank"
+      title="Chat on WhatsApp"
+      >💬</a
+    >
+
+    <!-- ── NAVIGATION ── -->
+    <nav id="navbar">
+      <a href="#home" class="nav-logo">LSE <span>Global</span></a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#clients">Partners</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Free Consultation</a>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-      <div class="hero-container container">
-        <div class="hero-content">
-          <div class="hero-badge">🎓 Trusted Since 2007</div>
-          <h1>
-            Empowering <span class="highlight">Future Leaders</span> Through
-            Excellence
-          </h1>
-          <p>
-            Transform your potential into success with India's premier training
-            and placement academy. We don't just teach, we transform lives.
-          </p>
-          <div class="cta-group">
-            <a href="#contact" class="btn btn-primary">Start Your Journey →</a>
-            <a href="#contact" class="btn btn-secondary">Get Free Consultation</a>
-          </div>
-          
+    <!-- ── HERO ── -->
+    <section id="home">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span>Trusted Since 2007 · Pondicherry, India</span>
         </div>
-      </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats fade-in-up">
-      <div class="stats-container container">
-        <div class="stat-item">
-          <div class="stat-number">16+</div>
-          <div class="stat-label">Years of Excellence</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">50+</div>
-          <div class="stat-label">Partner Institutions</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">10K+</div>
-          <div class="stat-label">Students Trained</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">95%</div>
-          <div class="stat-label">Success Rate</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about fade-in-up" id="about">
-      <div class="section-container container">
-        <div class="section-header">
-          <div class="section-badge">WHO WE ARE</div>
-          <h2 class="section-title">Luminen Service for Excellence</h2>
-          <p class="section-subtitle">
-            Founded by Venkatesh M., LSE has been the cornerstone of career
-            transformation in South India
-          </p>
-        </div>
-        <div class="about-content">
-          <div class="about-text">
-            <h3>Our Story</h3>
-            <p>
-              Since 2007, LSE has pioneered innovative training methodologies
-              that bridge the gap between academic learning and corporate
-              excellence. We've established a strong presence across schools,
-              colleges, and corporate sectors in Pondicherry and South Arcot.
-            </p>
-            <p>
-              Our CLAP program prepares students for today's competitive
-              corporate landscape through practical, activity-based learning
-              that goes beyond traditional education.
-            </p>
-            <ul class="feature-list">
-              <li>Activity-Based Learning Methodology (ABLM)</li>
-              <li>Practical Workshop-Driven Training</li>
-              <li>Industry-Expert Faculty</li>
-              <li>Proven Placement Track Record</li>
-              <li>Personalized Career Guidance</li>
-            </ul>
-          </div>
-          <div class="about-text">
-            <h3>Our Mission</h3>
-            <p>
-              To empower the unemployed and underemployed by transforming every
-              student into a highly employable professional who understands
-              their unique potential and strengths.
-            </p>
-            <h3>Our Vision</h3>
-            <p>
-              Combining the restless energy of youth with the priceless wisdom
-              of experience to create an atmosphere where every student thrives
-              and excels.
-            </p>
-            <h3>Our Philosophy</h3>
-            <p>
-              "Take up one idea. Make that one idea your life—think of it, dream
-              of it, live on that idea." We create focused, transformative
-              learning experiences.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services fade-in-up" id="services">
-      <div class="section-container container">
-        <div class="section-header">
-          <div class="section-badge">WHAT WE OFFER</div>
-          <h2 class="section-title">Comprehensive Training Solutions</h2>
-          <p class="section-subtitle">
-            End-to-end programs designed to transform potential into performance
-          </p>
-        </div>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon">💬</div>
-            <h3>Communication Skills</h3>
-            <p>
-              Master the art of effective communication through interactive
-              sessions and real-world practice scenarios.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🎯</div>
-            <h3>Career Training</h3>
-            <p>
-              Comprehensive career development programs with proven placement
-              assistance and industry connections.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🎓</div>
-            <h3>CLAP Program</h3>
-            <p>
-              Our flagship program preparing students for corporate excellence
-              through hands-on learning experiences.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🌟</div>
-            <h3>Personality Development</h3>
-            <p>
-              Build confidence, leadership skills, and professional presence to
-              stand out in any environment.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">👨‍🏫</div>
-            <h3>Faculty Development</h3>
-            <p>
-              Enhance teaching methodologies and stay updated with modern
-              educational practices and technologies.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🌍</div>
-            <h3>International Tests</h3>
-            <p>
-              Expert coaching for TOEFL, GRE, IELTS, and GMAT with proven
-              strategies for success.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🏢</div>
-            <h3>Campus Recruitment</h3>
-            <p>
-              On and off-campus placement drives connecting talent with top
-              employers across industries.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🎪</div>
-            <h3>Event Management</h3>
-            <p>
-              Professional event planning and execution services for educational
-              and corporate clients.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🏆</div>
-            <h3>Olympiads & Exams</h3>
-            <p>
-              Preparation programs for competitive examinations and government
-              entrance tests.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Methodology Section -->
-    <section class="methodology fade-in-up">
-      <div class="section-container container">
-        <div class="section-header">
-          <div class="section-badge">OUR APPROACH</div>
-          <h2 class="section-title">Activity-Based Learning Methodology</h2>
-          <p class="section-subtitle">
-            We don't lecture. We demonstrate, engage, and transform.
-          </p>
-        </div>
-        <div class="method-cards">
-          <div class="method-card">
-            <div class="method-number">01</div>
-            <h3>Practical Workshops</h3>
-            <p>
-              Hands-on training sessions that focus on real-world application
-              rather than theoretical concepts.
-            </p>
-          </div>
-          <div class="method-card">
-            <div class="method-number">02</div>
-            <h3>Active Participation</h3>
-            <p>
-              Students are active contributors, not passive listeners, ensuring
-              deeper engagement and retention.
-            </p>
-          </div>
-          <div class="method-card">
-            <div class="method-number">03</div>
-            <h3>Real-World Examples</h3>
-            <p>
-              Every concept is illustrated with day-to-day scenarios making
-              learning relatable and practical.
-            </p>
-          </div>
-          <div class="method-card">
-            <div class="method-number">04</div>
-            <h3>Individual Growth</h3>
-            <p>
-              We help each student discover their unique strengths and unlock
-              their inner potential.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section class="clients fade-in-up" id="clients">
-      <div class="section-container container">
-        <div class="section-header">
-          <div class="section-badge">OUR PARTNERS</div>
-          <h2 class="section-title">Trusted Across Education & Industry</h2>
-          <p class="section-subtitle">
-            Building lasting partnerships with schools, colleges, universities, and leading corporate organizations
-          </p>
-        </div>
-        <div class="clients-categories">
-          <div class="client-category">
-            <h3>🏫 Schools & Educational Institutions</h3>
-            <ul class="client-list">
-              <li>Amalorpavam Higher Secondary School</li>
-              <li>Sri Ramakrishna Paramahamsar Vidyalaya Hr. Sec. School</li>
-              <li>Seventh Day Adventist Higher Secondary School</li>
-              <li>The Study L'école Internationale School</li>
-              <li>Santa Clara Convent Girls Hr. Sec. School</li>
-            </ul>
-          </div>
-          <div class="client-category">
-            <h3>🎓 Colleges & Universities</h3>
-            <ul class="client-list">
-              <li>Mailam Engineering College</li>
-              <li>VRS Engineering College</li>
-              <li>IFET College of Engineering</li>
-              <li>SRM University</li>
-              <li>St. Joseph's College of Engineering</li>
-              <li>PRIST University</li>
-              <li>Saradha Gangadharan Arts and Science College</li>
-              <li>Idhaya College of Arts and Science</li>
-            </ul>
-          </div>
-          <div class="client-category">
-            <h3>🏢 Corporate Partners</h3>
-            <ul class="client-list">
-              <li>Leading Manufacturing Companies</li>
-              <li>IT & Technology Firms</li>
-              <li>Financial Services Sector</li>
-              <li>Healthcare Organizations</li>
-              <li>Retail & E-commerce Companies</li>
-              <li>Consulting Firms</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="cta-section fade-in-up" id="contact">
-      <div class="cta-content">
-        <h2>Ready to Transform Your Future?</h2>
-        <p>
-          Join thousands of successful professionals who started their journey
-          with LSE Global Academy. Get in touch today!
+        <h1 class="hero-h1">Empowering<br /><em>Future</em><br />Leaders</h1>
+        <p class="hero-sub">
+          India's premier training and placement academy. We don't just teach —
+          we transform lives through activity-based learning and industry
+          connections.
         </p>
-        <div class="contact-container">
-          <div class="contact-info">
-            <h3>Get Started Today</h3>
-            <div class="contact-item">
-              <div class="contact-icon">📞</div>
-              <div>
-                <strong>Call Us</strong><br />
-                +91 92347 67890
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">✉️</div>
-              <div>
-                <strong>Email Us</strong><br />
-                contact@lseglobal.academy
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📍</div>
-              <div>
-                <strong>Visit Us</strong><br />
-                Pondicherry, India
-              </div>
-            </div>
-          </div>
-          <div class="contact-form">
-            <div class="contact-card">
-              <h3>Book Your Free Consultation</h3>
-              <p>
-                Share your details below and our team will connect with you to build a custom learning plan.
-              </p>
-              <ul class="contact-benefits">
-                <li>Personalized course guidance</li>
-                <li>Free career strategy review</li>
-                <li>Fast response within 24 hours</li>
-              </ul>
-          
+        <div class="hero-buttons">
+          <a href="#contact" class="btn-primary"
+            ><span>Start Your Journey →</span></a
+          >
+          <a href="#about" class="btn-outline">Discover More</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&q=80"
+            alt="LSE Global Training Session"
+          />
+        </div>
+      </div>
+
+      <!-- Floating Stats -->
+      <div class="hero-stats-card">
+        <div class="stat-item">
+          <span class="stat-num" data-count="16">0</span>
+          <span class="stat-label">Years of Excellence</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-count="50">0</span>
+          <span class="stat-label">Partner Institutions</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-count="10000" data-suffix="K+">0</span>
+          <span class="stat-label">Students Trained</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-count="95" data-suffix="%">0</span>
+          <span class="stat-label">Success Rate</span>
+        </div>
+      </div>
+
+      <div class="hero-vertical-text">
+        LSE Global Academy · Excellence in Education
+      </div>
+
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span>Scroll to explore</span>
+      </div>
+    </section>
+
+    <!-- ── MARQUEE ── -->
+    <div class="marquee-section">
+      <div class="marquee-track">
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Communication Skills
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>CLAP Program
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Campus Recruitment
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>TOEFL · GRE · IELTS · GMAT
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Faculty Development
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Personality Development
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Olympiads & Exams
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Event Management
+        </div>
+        <!-- duplicate for seamless loop -->
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Communication Skills
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>CLAP Program
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Campus Recruitment
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>TOEFL · GRE · IELTS · GMAT
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Faculty Development
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Personality Development
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Olympiads & Exams
+        </div>
+        <div class="marquee-item">
+          <span class="marquee-dot"></span>Event Management
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ABOUT ── -->
+    <section id="about">
+      <div class="about-img-grid reveal">
+        <div class="about-img-main">
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+            alt="LSE Training Workshop"
+          />
+        </div>
+        <div class="about-img-sm">
+          <img
+            src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=500&q=80"
+            alt="Students Learning"
+          />
+        </div>
+        <div class="about-img-sm">
+          <img
+            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&q=80"
+            alt="Group Discussion"
+          />
+        </div>
+        <div class="about-img-badge">
+          <strong>17+</strong>
+          <span>Years of<br />Excellence</span>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <div class="section-tag reveal">Who We Are</div>
+        <h2 class="section-title reveal reveal-delay-1">
+          Luminen Service<br />for <em>Excellence</em>
+        </h2>
+        <p class="about-desc reveal reveal-delay-2">
+          Founded by <strong>Venkatesh M.</strong>, LSE has been the cornerstone
+          of career transformation in South India since 2007. We've pioneered
+          innovative training methodologies that bridge the gap between academic
+          learning and corporate excellence — with a strong presence across
+          Pondicherry and South Arcot.
+        </p>
+        <ul class="about-features reveal reveal-delay-3">
+          <li>Activity-Based Learning Methodology (ABLM)</li>
+          <li>Practical Workshop-Driven Training</li>
+          <li>Industry-Expert Faculty</li>
+          <li>Proven Placement Track Record</li>
+          <li>Personalized Career Guidance</li>
+        </ul>
+        <a href="#contact" class="btn-primary reveal reveal-delay-4"
+          ><span>Get Free Consultation →</span></a
+        >
+      </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section id="services">
+      <div class="services-header">
+        <div>
+          <div class="section-tag reveal">What We Offer</div>
+          <h2 class="section-title reveal reveal-delay-1">
+            Comprehensive<br /><em>Training</em> Solutions
+          </h2>
+        </div>
+        <p class="services-desc reveal reveal-delay-2">
+          End-to-end programs designed to transform potential into performance,
+          bridging the gap between academic learning and corporate excellence.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <span class="service-icon">💬</span>
+          <span class="service-num">01</span>
+          <h3 class="service-title">Communication Skills</h3>
+          <p class="service-desc">
+            Master effective communication through interactive sessions and
+            real-world practice scenarios with industry mentors.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-icon">🎯</span>
+          <span class="service-num">02</span>
+          <h3 class="service-title">Career Training</h3>
+          <p class="service-desc">
+            Comprehensive career development programs with proven placement
+            assistance and deep industry connections.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-icon">🎓</span>
+          <span class="service-num">03</span>
+          <h3 class="service-title">CLAP Program</h3>
+          <p class="service-desc">
+            Our flagship program preparing students for corporate excellence
+            through hands-on, activity-based learning experiences.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <span class="service-icon">🌟</span>
+          <span class="service-num">04</span>
+          <h3 class="service-title">Personality Development</h3>
+          <p class="service-desc">
+            Build confidence, leadership skills, and professional presence to
+            stand out in any competitive environment.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-4">
+          <span class="service-icon">👨‍🏫</span>
+          <span class="service-num">05</span>
+          <h3 class="service-title">Faculty Development</h3>
+          <p class="service-desc">
+            Enhance teaching methodologies and stay updated with modern
+            educational practices and emerging technologies.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-5">
+          <span class="service-icon">🌍</span>
+          <span class="service-num">06</span>
+          <h3 class="service-title">International Tests</h3>
+          <p class="service-desc">
+            Expert coaching for TOEFL, GRE, IELTS, and GMAT with proven
+            strategies for achieving top scores.
+          </p>
+        </div>
+        <div class="service-card reveal">
+          <span class="service-icon">🏢</span>
+          <span class="service-num">07</span>
+          <h3 class="service-title">Campus Recruitment</h3>
+          <p class="service-desc">
+            On and off-campus placement drives connecting exceptional talent
+            with top employers across industries.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-icon">🎪</span>
+          <span class="service-num">08</span>
+          <h3 class="service-title">Event Management</h3>
+          <p class="service-desc">
+            Professional event planning and execution services for educational
+            and corporate clients across South India.
+          </p>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-icon">🏆</span>
+          <span class="service-num">09</span>
+          <h3 class="service-title">Olympiads & Exams</h3>
+          <p class="service-desc">
+            Preparation programs for competitive examinations and government
+            entrance tests with proven methodologies.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-container container">
-        <div class="footer-section">
-          <h4>About LSE</h4>
+    <!-- ── METHODOLOGY ── -->
+    <section id="methodology">
+      <div class="method-img reveal">
+        <img
+          src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=700&q=80"
+          alt="Activity Based Learning"
+        />
+        <div class="method-img-overlay"></div>
+        <div class="method-quote">
           <p>
-            LSE Global Academy has been transforming students since 2007 with
-            practical, activity-focused programs that bridge education and
-            industry.
+            "Take up one idea. Make that one idea your life — think of it, dream
+            of it, live on that idea."
           </p>
-        </div>
-
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-        <div class="footer-section">
-          <h4>Contact</h4>
-          <p>📍 Pondicherry, India</p>
-          <p>📞 +91 12345 67890</p>
-          <p>✉️ contact@lseglobal.academy</p>
-        <div class="footer-section">
-          <h4>Stay Updated</h4>
-          <p>Subscribe to our newsletter for the latest updates and career tips.</p>
-          <form class="newsletter-form">
-            <input type="email" placeholder="Enter your email" required>
-            <button type="submit" class="btn btn-primary">Subscribe</button>
-          </form>
+          <cite>— Swami Vivekananda · Our Philosophy</cite>
         </div>
       </div>
 
+      <div>
+        <div class="section-tag reveal">Our Approach</div>
+        <h2 class="section-title reveal reveal-delay-1">
+          Activity-Based<br /><em>Learning</em> Methodology
+        </h2>
+        <div class="method-steps">
+          <div class="method-step reveal reveal-delay-1">
+            <span class="step-num">01</span>
+            <div>
+              <h3 class="step-title">Practical Workshops</h3>
+              <p class="step-desc">
+                Hands-on training sessions that focus on real-world application
+                rather than passive theoretical learning.
+              </p>
+            </div>
+          </div>
+          <div class="method-step reveal reveal-delay-2">
+            <span class="step-num">02</span>
+            <div>
+              <h3 class="step-title">Active Participation</h3>
+              <p class="step-desc">
+                Students are active contributors, not passive listeners —
+                ensuring deeper engagement and lasting retention.
+              </p>
+            </div>
+          </div>
+          <div class="method-step reveal reveal-delay-3">
+            <span class="step-num">03</span>
+            <div>
+              <h3 class="step-title">Real-World Examples</h3>
+              <p class="step-desc">
+                Every concept is illustrated with day-to-day scenarios making
+                learning relatable, practical and memorable.
+              </p>
+            </div>
+          </div>
+          <div class="method-step reveal reveal-delay-4">
+            <span class="step-num">04</span>
+            <div>
+              <h3 class="step-title">Individual Growth</h3>
+              <p class="step-desc">
+                We help each student discover their unique strengths and unlock
+                their full inner potential for the future.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PARTNERS ── -->
+    <section id="clients">
+      <div class="partners-intro">
+        <div class="section-tag reveal" style="justify-content: center">
+          Our Partners
+        </div>
+        <h2
+          class="section-title reveal reveal-delay-1"
+          style="text-align: center"
+        >
+          Trusted Across<br />Education <em>&</em> Industry
+        </h2>
+        <p class="partners-desc reveal reveal-delay-2">
+          Building lasting partnerships with schools, colleges, universities,
+          and leading corporate organizations across South India.
+        </p>
+      </div>
+
+      <div class="partners-tabs reveal reveal-delay-3">
+        <button class="tab-btn active" onclick="showTab('schools')">
+          Schools
+        </button>
+        <button class="tab-btn" onclick="showTab('colleges')">Colleges</button>
+        <button class="tab-btn" onclick="showTab('corporate')">
+          Corporate
+        </button>
+      </div>
+
+      <div id="tab-schools" class="partners-panel partners-school-grid active">
+        <div class="partner-item">
+          <span class="partner-icon">🏫</span
+          ><span class="partner-name">Amalorpavam Higher Secondary School</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🏫</span
+          ><span class="partner-name"
+            >Sri Ramakrishna Paramahamsar Vidyalaya Hr. Sec. School</span
+          >
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🏫</span
+          ><span class="partner-name"
+            >Seventh Day Adventist Higher Secondary School</span
+          >
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🏫</span
+          ><span class="partner-name"
+            >The Study L'école Internationale School</span
+          >
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🏫</span
+          ><span class="partner-name"
+            >Santa Clara Convent Girls Hr. Sec. School</span
+          >
+        </div>
+      </div>
+
+      <div id="tab-colleges" class="partners-panel partners-school-grid">
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">Mailam Engineering College</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">VRS Engineering College</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">IFET College of Engineering</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">SRM University</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">St. Joseph's College of Engineering</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">PRIST University</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name"
+            >Saradha Gangadharan Arts & Science College</span
+          >
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🎓</span
+          ><span class="partner-name">Idhaya College of Arts & Science</span>
+        </div>
+      </div>
+
+      <div id="tab-corporate" class="partners-panel partners-school-grid">
+        <div class="partner-item">
+          <span class="partner-icon">🏭</span
+          ><span class="partner-name">Leading Manufacturing Companies</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">💻</span
+          ><span class="partner-name">IT & Technology Firms</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">💳</span
+          ><span class="partner-name">Financial Services Sector</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🏥</span
+          ><span class="partner-name">Healthcare Organizations</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">🛒</span
+          ><span class="partner-name">Retail & E-commerce Companies</span>
+        </div>
+        <div class="partner-item">
+          <span class="partner-icon">📊</span
+          ><span class="partner-name">Consulting Firms</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section id="testimonials">
+      <div class="testimonials-header">
+        <div>
+          <div class="section-tag reveal">Student Stories</div>
+          <h2 class="section-title reveal reveal-delay-1">
+            Real Voices,<br /><em>Real</em> Transformations
+          </h2>
+        </div>
+        <div class="testimonial-controls">
+          <button class="tctrl" id="tPrev">←</button>
+          <button class="tctrl" id="tNext">→</button>
+        </div>
+      </div>
+
+      <div style="overflow: hidden">
+        <div class="testimonials-track" id="tTrack">
+          <div class="testimonial-card">
+            <p class="test-text">
+              "LSE's CLAP program completely changed my perspective on career
+              readiness. Within three months of the program, I received
+              placement offers from two IT firms. The practical workshop
+              approach made all the difference."
+            </p>
+            <div class="test-author">
+              <div class="test-avatar">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
+                  alt="Rajesh Kumar"
+                />
+              </div>
+              <div>
+                <div class="test-name">Rajesh Kumar</div>
+                <div class="test-role">Software Engineer, Chennai</div>
+                <div class="test-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="test-text">
+              "The communication skills training at LSE Global gave me the
+              confidence I never thought I had. Mr. Venkatesh's approach is
+              genuinely transformative — not just theoretical but deeply
+              practical and empowering."
+            </p>
+            <div class="test-author">
+              <div class="test-avatar">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80"
+                  alt="Priya Nair"
+                />
+              </div>
+              <div>
+                <div class="test-name">Priya Nair</div>
+                <div class="test-role">HR Manager, Bangalore</div>
+                <div class="test-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="test-text">
+              "I scored 310 on the GRE with LSE's guidance — 20 points above my
+              target. Their GMAT coaching is extremely focused and the faculty's
+              industry experience shows in every session. Highly recommended for
+              anyone aiming for global education."
+            </p>
+            <div class="test-author">
+              <div class="test-avatar">
+                <img
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80"
+                  alt="Arjun Mehta"
+                />
+              </div>
+              <div>
+                <div class="test-name">Arjun Mehta</div>
+                <div class="test-role">
+                  Graduate Student, University of Texas
+                </div>
+                <div class="test-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="test-text">
+              "Our college engaged LSE for faculty development workshops and the
+              feedback from our teaching staff was overwhelmingly positive. They
+              brought fresh, modern perspectives that elevated our entire
+              department's performance."
+            </p>
+            <div class="test-author">
+              <div class="test-avatar">
+                <img
+                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80"
+                  alt="Dr. Meena Subramanian"
+                />
+              </div>
+              <div>
+                <div class="test-name">Dr. Meena Subramanian</div>
+                <div class="test-role">
+                  Principal, IFET College of Engineering
+                </div>
+                <div class="test-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <div class="contact-left">
+        <div class="section-tag reveal">Get In Touch</div>
+        <h2 class="section-title reveal reveal-delay-1">
+          Ready to<br /><em>Transform</em><br />Your Future?
+        </h2>
+        <p class="contact-tagline reveal reveal-delay-2">
+          Join thousands of successful professionals who started their journey
+          with LSE Global Academy. Book your free consultation today.
+        </p>
+        <div class="contact-info reveal reveal-delay-3">
+          <div class="contact-row">
+            <span class="contact-label">Phone</span>
+            <span class="contact-value">+91 92347 67890</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Email</span>
+            <span class="contact-value">contact@lseglobal.academy</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Location</span>
+            <span class="contact-value">Pondicherry, India</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Hours</span>
+            <span class="contact-value">Mon–Sat, 9 AM – 6 PM</span>
+          </div>
+        </div>
+        <div class="contact-img reveal reveal-delay-4">
+          <img
+            src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=700&q=80"
+            alt="Pondicherry"
+          />
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="section-tag">Book Your Free Consultation</div>
+        <br />
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Your Full Name</label>
+            <input type="text" placeholder="Rajesh Kumar" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="rajesh@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+91 98765 43210" />
+          </div>
+          <div class="form-group">
+            <label>Program of Interest</label>
+            <select>
+              <option value="">Select a program</option>
+              <option>Communication Skills</option>
+              <option>CLAP Program</option>
+              <option>Career Training</option>
+              <option>Personality Development</option>
+              <option>International Tests (TOEFL/GRE/IELTS/GMAT)</option>
+              <option>Campus Recruitment</option>
+              <option>Faculty Development</option>
+              <option>Event Management</option>
+              <option>Olympiads & Competitive Exams</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Message</label>
+            <textarea
+              placeholder="Tell us about your goals and how we can help..."
+            ></textarea>
+          </div>
+          <button class="form-submit">Send Message →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">LSE <span>Global</span></div>
+          <p class="footer-brand-desc">
+            Luminen Service for Excellence — transforming students into highly
+            employable professionals since 2007, with activity-based learning
+            that goes beyond traditional education.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#clients">Partners</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <ul>
+            <li><a href="#services">CLAP Program</a></li>
+            <li><a href="#services">Communication Skills</a></li>
+            <li><a href="#services">International Tests</a></li>
+            <li><a href="#services">Campus Recruitment</a></li>
+            <li><a href="#services">Faculty Development</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+919234767890">+91 92347 67890</a></li>
+            <li>
+              <a href="mailto:contact@lseglobal.academy"
+                >contact@lseglobal.academy</a
+              >
+            </li>
+            <li><a href="#">Pondicherry, India</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer-bottom">
-        <p>&copy; 2007 - 2025 LSE Global Academy. All Rights Reserved. | Powered by Excellence in Education</p>
+        <span class="footer-copy"
+          >© 2007 – 2026 <span>LSE Global Academy</span>. All Rights
+          Reserved.</span
+        >
+        <span class="footer-copy"
+          >Powered by <span>Excellence in Education</span></span
+        >
       </div>
     </footer>
 
     <script>
-      // Scroll animations
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = "running";
-          }
-        });
-      }, observerOptions);
-
-      // Observe all animated sections
-      document
-        .querySelectorAll(".fade-in-up, .slide-in-left, .slide-in-right")
-        .forEach((el) => {
-          el.style.animationPlayState = "paused";
-          observer.observe(el);
-        });
-
-      // Add hover effects to service cards
-      document.querySelectorAll(".service-card").forEach((card) => {
-        card.addEventListener("mouseenter", () => {
-          card.style.transform = "translateY(-12px) scale(1.03) rotate(1deg)";
-          card.style.boxShadow = "var(--shadow-strong)";
-        });
-        card.addEventListener("mouseleave", () => {
-          card.style.transform = "translateY(0) scale(1) rotate(0deg)";
-          card.style.boxShadow = "var(--shadow-soft)";
-        });
+      // ── Custom Cursor
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
       });
-
-      // Mobile menu toggle
-      (function () {
-        const navLinks = document.getElementById("navLinks");
-        const mobileToggle = document.querySelector(".mobile-toggle");
-        if (!navLinks || !mobileToggle) return;
-
-        function toggleMenu() {
-          const isOpen = navLinks.classList.toggle("active");
-          mobileToggle.classList.toggle("open");
-          document.body.classList.toggle("no-scroll", isOpen);
-          mobileToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        }
-
-        // expose for inline onclick
-        window.toggleMenu = toggleMenu;
-
-        document.querySelectorAll(".nav-links a").forEach((a) => {
-          a.addEventListener("click", () => {
-            navLinks.classList.remove("active");
-            mobileToggle.classList.remove("open");
-            document.body.classList.remove("no-scroll");
-            mobileToggle.setAttribute("aria-expanded", "false");
+      function animCursor() {
+        cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+        rx += (mx - rx - 18) * 0.12;
+        ry += (my - ry - 18) * 0.12;
+        ring.style.transform = `translate(${rx}px, ${ry}px)`;
+        requestAnimationFrame(animCursor);
+      }
+      animCursor();
+      document
+        .querySelectorAll(
+          "a, button, .service-card, .method-step, .partner-item",
+        )
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            cursor.style.transform += " scale(1.8)";
+            ring.style.width = "56px";
+            ring.style.height = "56px";
+          });
+          el.addEventListener("mouseleave", () => {
+            ring.style.width = "36px";
+            ring.style.height = "36px";
           });
         });
-      })();
+
+      // ── Navbar scroll
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 60);
+      });
+
+      // ── Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      reveals.forEach((el) => observer.observe(el));
+
+      // ── Count-up animation
+      function countUp(el, target, suffix) {
+        let start = 0;
+        const isLarge = target >= 1000;
+        const displayTarget = isLarge ? target / 1000 : target;
+        const duration = 2000;
+        const step = displayTarget / (duration / 16);
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= displayTarget) {
+            start = displayTarget;
+            clearInterval(timer);
+          }
+          el.textContent =
+            (isLarge ? Math.floor(start) + "K" : Math.floor(start)) +
+            (suffix || "+");
+        }, 16);
+      }
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              document
+                .querySelectorAll(".stat-num[data-count]")
+                .forEach((el) => {
+                  const target = parseInt(el.dataset.count);
+                  const suffix = el.dataset.suffix || "+";
+                  countUp(el, target, suffix === "+" ? "+" : suffix);
+                });
+              statsObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+      const statsCard = document.querySelector(".hero-stats-card");
+      if (statsCard) statsObserver.observe(statsCard);
+
+      // ── Testimonial carousel
+      const track = document.getElementById("tTrack");
+      let tIndex = 0;
+      const tCards = track.querySelectorAll(".testimonial-card");
+      const tTotal = tCards.length;
+      function slideTo(i) {
+        tIndex = (i + tTotal) % tTotal;
+        track.style.transform = `translateX(calc(-${tIndex * 50}% - ${tIndex * 12}px))`;
+      }
+      document
+        .getElementById("tNext")
+        .addEventListener("click", () => slideTo(tIndex + 1));
+      document
+        .getElementById("tPrev")
+        .addEventListener("click", () => slideTo(tIndex - 1));
+      setInterval(() => slideTo(tIndex + 1), 5000);
+
+      // ── Partner tabs
+      function showTab(name) {
+        document
+          .querySelectorAll(".partners-panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("tab-" + name).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      // ── Form submit
+      document
+        .querySelector(".form-submit")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          this.textContent =
+            "✓ Message Sent! We will reach out within 24 hours.";
+          this.style.background = "#25D366";
+          setTimeout(() => {
+            this.textContent = "Send Message →";
+            this.style.background = "";
+          }, 4000);
+        });
     </script>
   </body>
 </html>
