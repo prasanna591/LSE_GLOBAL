@@ -124,32 +124,72 @@
       .mobile-toggle {
         display: none;
         flex-direction: column;
-        gap: 6px;
+        gap: 4px;
         cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 6px;
-        transition: background 0.15s ease;
+        padding: 0.75rem;
+        border-radius: var(--border-radius);
+        background: var(--nav-glass);
+        -webkit-backdrop-filter: blur(8px) saturate(120%);
+        backdrop-filter: blur(8px) saturate(120%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mobile-toggle::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .mobile-toggle:hover::before {
+        left: 100%;
+      }
+
+      .mobile-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+        box-shadow: var(--shadow-soft);
       }
 
       .mobile-toggle span {
-        width: 25px;
-        height: 3px;
-        background: blue;
-        border-radius: 2px;
-        transition: 0.3s;
+        width: 24px;
+        height: 2px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 1px;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform-origin: center;
+        position: relative;
+      }
+
+      .mobile-toggle span:nth-child(1) {
+        transform: translateY(-1px);
+      }
+
+      .mobile-toggle span:nth-child(3) {
+        transform: translateY(1px);
       }
 
       /* mobile toggle open state */
       .mobile-toggle.open span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
+        transform: translateY(6px) rotate(45deg);
+        background: var(--accent);
       }
 
       .mobile-toggle.open span:nth-child(2) {
         opacity: 0;
+        transform: scaleX(0);
       }
 
       .mobile-toggle.open span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
+        transform: translateY(-6px) rotate(-45deg);
+        background: var(--accent);
       }
 
       /* Hero Section */
@@ -666,57 +706,135 @@
       /* Clients Section */
       .clients {
         padding: 6rem 1.5rem;
-        background: var(--light);
+        background:
+          linear-gradient(135deg, var(--light) 0%, rgba(248, 249, 250, 0.8) 100%),
+          radial-gradient(circle at 20% 80%, rgba(45, 90, 160, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(244, 162, 97, 0.03) 0%, transparent 50%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .clients::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(45,90,160,0.02)"/><circle cx="75" cy="75" r="1" fill="rgba(244,162,97,0.02)"/><circle cx="50" cy="10" r="0.5" fill="rgba(231,111,81,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.5;
+        pointer-events: none;
       }
 
       .clients-categories {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 3rem;
-        margin-top: 3rem;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2.5rem;
+        margin-top: 4rem;
+        position: relative;
+        z-index: 1;
       }
 
       .client-category {
         background: var(--white);
-        padding: 3.5rem;
+        padding: 3rem;
         border-radius: var(--border-radius-large);
         box-shadow: var(--shadow-medium);
-        border: 1px solid rgba(45, 90, 160, 0.05);
-        transition: all 0.3s ease;
+        border: 1px solid rgba(45, 90, 160, 0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .client-category::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .client-category:hover::before {
+        transform: scaleX(1);
       }
 
       .client-category:hover {
-        transform: translateY(-4px);
+        transform: translateY(-8px) scale(1.02);
         box-shadow: var(--shadow-strong);
+        border-color: rgba(45, 90, 160, 0.15);
+      }
+
+      .client-category:nth-child(1) h3::before {
+        content: '🏫';
+      }
+
+      .client-category:nth-child(2) h3::before {
+        content: '🎓';
+      }
+
+      .client-category:nth-child(3) h3::before {
+        content: '🏢';
       }
 
       .client-category h3 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         color: var(--dark);
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 3px solid var(--primary);
-        display: inline-block;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid rgba(45, 90, 160, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 700;
       }
 
       .client-list {
         list-style: none;
+        margin: 0;
+        padding: 0;
       }
 
       .client-list li {
-        padding: 1rem 0;
+        padding: 1.25rem 0;
         color: var(--gray);
-        border-bottom: 1px solid var(--light);
+        border-bottom: 1px solid rgba(45, 90, 160, 0.06);
         display: flex;
         align-items: center;
         gap: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-radius: 8px;
+        padding-left: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .client-list li:hover {
+        background: rgba(45, 90, 160, 0.02);
+        color: var(--dark);
+        transform: translateX(4px);
+        border-radius: 8px;
+        padding-left: 1.5rem;
       }
 
       .client-list li::before {
-        content: "→";
-        color: var(--primary);
-        font-weight: bold;
-        font-size: 1.2rem;
+        content: '🏛️';
+        font-size: 1.1rem;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+      }
+
+      .client-list li:hover::before {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
+      .client-list li:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
       }
 
       /* CTA Section */
@@ -793,10 +911,11 @@
         color: var(--nav-link, var(--gray));
       }
 
-      /* Mobile toggle shows subtle glass when open */
+      /* Mobile toggle shows enhanced glass when open */
       .mobile-toggle.open {
-        /* stronger so icon remains visible over varied backgrounds */
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: var(--shadow-medium);
+        transform: scale(1.05);
       }
 
       .contact-icon {
@@ -816,6 +935,45 @@
         border-radius: var(--border-radius-large);
         box-shadow: var(--shadow-medium);
         border: 1px solid rgba(45, 90, 160, 0.05);
+      }
+
+      .contact-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .contact-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      .contact-card p {
+        color: var(--gray);
+        line-height: 1.8;
+      }
+
+      .contact-benefits {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .contact-benefits li {
+        padding: 0.85rem 1rem;
+        background: rgba(45, 90, 160, 0.06);
+        border-radius: 12px;
+        color: var(--dark);
+      }
+
+      .contact-form iframe {
+        width: 100%;
+        min-height: 520px;
+        border-radius: 18px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
       }
 
       .form-group {
@@ -1081,13 +1239,7 @@
             <a href="#contact" class="btn btn-primary">Start Your Journey →</a>
             <a href="#contact" class="btn btn-secondary">Get Free Consultation</a>
           </div>
-          <div class="newsletter-hero">
-            <p>Subscribe for exclusive career tips and updates</p>
-            <form class="newsletter-form">
-              <input type="email" placeholder="Enter your email" required>
-              <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
-          </div>
+          
         </div>
       </div>
     </section>
@@ -1310,14 +1462,24 @@
       <div class="section-container container">
         <div class="section-header">
           <div class="section-badge">OUR PARTNERS</div>
-          <h2 class="section-title">Trusted by Leading Institutions</h2>
+          <h2 class="section-title">Trusted Across Education & Industry</h2>
           <p class="section-subtitle">
-            Partnerships built on excellence, trust, and proven results
+            Building lasting partnerships with schools, colleges, universities, and leading corporate organizations
           </p>
         </div>
         <div class="clients-categories">
           <div class="client-category">
-            <h3>Educational Institutions</h3>
+            <h3>🏫 Schools & Educational Institutions</h3>
+            <ul class="client-list">
+              <li>Amalorpavam Higher Secondary School</li>
+              <li>Sri Ramakrishna Paramahamsar Vidyalaya Hr. Sec. School</li>
+              <li>Seventh Day Adventist Higher Secondary School</li>
+              <li>The Study L'école Internationale School</li>
+              <li>Santa Clara Convent Girls Hr. Sec. School</li>
+            </ul>
+          </div>
+          <div class="client-category">
+            <h3>🎓 Colleges & Universities</h3>
             <ul class="client-list">
               <li>Mailam Engineering College</li>
               <li>VRS Engineering College</li>
@@ -1325,6 +1487,19 @@
               <li>SRM University</li>
               <li>St. Joseph's College of Engineering</li>
               <li>PRIST University</li>
+              <li>Saradha Gangadharan Arts and Science College</li>
+              <li>Idhaya College of Arts and Science</li>
+            </ul>
+          </div>
+          <div class="client-category">
+            <h3>🏢 Corporate Partners</h3>
+            <ul class="client-list">
+              <li>Leading Manufacturing Companies</li>
+              <li>IT & Technology Firms</li>
+              <li>Financial Services Sector</li>
+              <li>Healthcare Organizations</li>
+              <li>Retail & E-commerce Companies</li>
+              <li>Consulting Firms</li>
             </ul>
           </div>
         </div>
@@ -1365,7 +1540,18 @@
             </div>
           </div>
           <div class="contact-form">
-           
+            <div class="contact-card">
+              <h3>Book Your Free Consultation</h3>
+              <p>
+                Share your details below and our team will connect with you to build a custom learning plan.
+              </p>
+              <ul class="contact-benefits">
+                <li>Personalized course guidance</li>
+                <li>Free career strategy review</li>
+                <li>Fast response within 24 hours</li>
+              </ul>
+           <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScOp9GEdMChVPsBTfb5pM51yIodQge1FTBIq3XqbwrGPxnMeQ/viewform?embedded=true" width="640" height="1009" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
           </div>
         </div>
       </div>
